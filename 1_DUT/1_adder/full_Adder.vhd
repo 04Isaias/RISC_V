@@ -6,11 +6,11 @@ library IEEE;
 use IEEE.std_logic_1164.all;
 entity full_adder is
     port(
-        a     : in  std_logic;
-        b     : in  std_logic;
-        c_in  : in std_logic;
-        s     : out std_logic;
-        c_out : out std_logic
+        a     : in  STD_LOGIC;
+        b     : in  STD_LOGIC;
+        c_in  : in  STD_LOGIC;
+        s     : out STD_LOGIC;
+        c_out : out STD_LOGIC
     );
 end full_adder;
 

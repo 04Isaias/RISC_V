@@ -1,4 +1,0 @@
--- October 17, 2025
--- Isaias M Ramirez
--- The circuit described within this file is a
--- 2-bit full adder.

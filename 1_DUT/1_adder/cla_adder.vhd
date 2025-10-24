@@ -49,7 +49,7 @@ g_i_generate: for bit_index in 1 to (num_bits - 1) generate
         (propagate_i(bit_index) AND generate_i(bit_index-1));
 end generate g_i_generate;
 --block_generate is the resultant generate used to calculate the carry
-block_generate <= generate_i(0);
+block_generate <= generate_i( num_bits - 1 );
 
 c_out <= block_generate OR (block_Propagate AND c_in);
 

@@ -32,7 +32,7 @@ architecture structural_arch of gen_adder is
 begin
     -- create 8 adders and connect their carries together
     carry_i(0) <= '0';
-    gen : for index in 0 to num_bits/4 generate
+    gen : for index in 0 to ( num_bits/4 - 1) generate
         a0 : cla_adder
             generic map(num_bits => 4)
             port map(

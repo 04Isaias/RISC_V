@@ -11,7 +11,7 @@ entity cla_adder is
         a       : in  STD_LOGIC_VECTOR ( num_bits - 1 downto 0 );
         b       : in  STD_LOGIC_VECTOR ( num_bits - 1 downto 0 ); 
         c_in    : in  STD_LOGIC;
-        s       : out STD_LOGIC;
+        s       : out STD_LOGIC_VECTOR ( num_bits - 1 downto 0 );
         c_out   : out STD_LOGIC
     );
 end cla_adder; 
@@ -65,6 +65,6 @@ c_out <= block_generate OR (block_Propagate AND c_in);
                 c_out => carry_i(i+1) -- we don't use the last carry
             );
         end generate sum_ckt;
-    s <= sum_i(num_bits - 1);
+    s <= sum_i;
 
 end architecture mixed_arch; 

@@ -11,4 +11,6 @@ package adder_pkg;
 `include "sequence_item.svh"
 typedef uvm_sequencer #(sequence_item) sequencer;
 
+`include "driver.svh"
+
 endpackage : adder_pkg

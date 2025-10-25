@@ -1,1 +1,1 @@
-includePath=Common Libraries\\UVM;2_TestBench/tb_classes;2_TestBench;2_TestBench/tb_classes/test_classes
+includePath=Common Libraries/UVM;2_TestBench/tb_classes;2_TestBench;2_TestBench/tb_classes/test_classes;2_TestBench/tb_classes/sequence_classes;2_TestBench/1_adder_tb/tb_classes;2_TestBench/1_adder_tb/tb_classes/sequence_classes

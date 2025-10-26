@@ -22,7 +22,14 @@ class env extends uvm_env;
         //monitor
         result_monitor_h = result_monitor::type_id::create("coverage_h", this);
         //analysis
-        
+
             //missing coverage and scoreboard
     endfunction : build_phase
+
+
+    function void connect_phase(uvm_phase phase);
+        driver_h.seq_item_port.connect(sequencer_h.seq_item_export);
+
+        
+    endfunction : connect_phase
 endclass : env

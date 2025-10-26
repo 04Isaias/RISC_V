@@ -15,5 +15,8 @@ typedef uvm_sequencer #(sequence_item) sequencer;
 
 `include "driver.svh"
 `include "result_monitor.svh"
+`include "scoreboard.svh"
+
+`include "env.svh"
 
 endpackage : adder_pkg

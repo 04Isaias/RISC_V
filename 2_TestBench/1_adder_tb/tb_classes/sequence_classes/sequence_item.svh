@@ -1,7 +1,8 @@
 /* 
  October 25, 2025
  Isaias M Ramirez
- definition of a sequence_item for this testbench 
+ definition of a sequence_item for this testbench objects of this class are used to 
+ communicate data accross the testbench, 
  along with a few helpful functions for comparing, copying, and converting to string.
 */
 class sequence_item extends uvm_sequence_item;

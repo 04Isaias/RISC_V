@@ -22,12 +22,15 @@ interface adder_bfm;
         end
     endtask : send_add
 
-    /* write the result monitor 
-    -
-    -
-    -
-    -
-    */
+    result_monitor result_monitor_h;
+
+    initial begin: result_monitor_thread
+        forever begin: result_monitor_block
+            @(posedge clk);
+            /* maybe include a wait here? */
+            result_monitor_h.write_to_monitor(result);
+        end: result_monitor_block        
+    end : result_monitor_thread
 
 
     initial begin

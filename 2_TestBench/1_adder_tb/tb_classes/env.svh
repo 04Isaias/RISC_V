@@ -10,6 +10,8 @@ class env extends uvm_env;
     sequencer           sequencer_h;
     driver              driver_h;
     result_monitor      result_monitor_h;
+    coverage            coverage_h;
+    scoreboard          scoreboard_h;
 
     function new( string name, uvm_component parent);
         super.new(name, parent);
@@ -20,15 +22,19 @@ class env extends uvm_env;
         sequencer_h = new("sequencer_h", this);
         driver_h    = driver::type_id::create("driver_h", this);
         //monitor
-        result_monitor_h = result_monitor::type_id::create("coverage_h", this);
+        result_monitor_h = result_monitor::type_id::create("result_monitor", this);
         //analysis
+        coverage_h = coverage::type_id::create("coverage_h", this);
+        scoreboard_h = scoreboard::type_id::create("scoreboard_", this);
 
-            //missing coverage and scoreboard
     endfunction : build_phase
 
 
     function void connect_phase(uvm_phase phase);
+
         driver_h.seq_item_port.connect(sequencer_h.seq_item_export);
+
+        result_monitor_h.ap.connect(scoreboard_h.analysis_export);
 
         
     endfunction : connect_phase

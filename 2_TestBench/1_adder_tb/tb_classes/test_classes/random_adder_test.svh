@@ -15,5 +15,8 @@ class random_adder_test extends adder_base_test;
         random_seq.start(null);
         phase.drop_objection(this);
     endtask : run_phase
-
+    
+    function new (string name, uvm_component parent);
+        super.new(name,parent);
+    endfunction : new
 endclass : random_adder_test

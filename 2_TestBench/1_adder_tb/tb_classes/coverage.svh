@@ -12,15 +12,15 @@ class coverage extends uvm_subscriber #(sequence_item);
 
     covergroup zeros_or_ones;
         a_leg : coverpoint uint_A {
-            bins zeros = {8'h0000_0000};
-            bins others = {[8'h0000_0001 : 8'hFFFF_FFFE]};
-            bins ones = {8'hFFFF_FFFF};
+            bins zeros = {32'h0000_0000};
+            bins others = {[32'h0000_0001 : 32'hFFFF_FFFE]};
+            bins ones = {32'hFFFF_FFFF};
         }
 
         b_leg : coverpoint uint_B {
-            bins zeros = {8'h0000_0000};
-            bins others = {[8'h0000_0001 : 8'hFFFF_FFFE]};
-            bins ones = {8'hFFFF_FFFF};
+            bins zeros = {32'h0000_0000};
+            bins others = {[32'h0000_0001 : 32'hFFFF_FFFE]};
+            bins ones = {32'hFFFF_FFFF};
         }
 
         all_comb: cross a_leg, b_leg {

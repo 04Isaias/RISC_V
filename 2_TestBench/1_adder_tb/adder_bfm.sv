@@ -27,7 +27,7 @@ interface adder_bfm;
     initial begin: result_monitor_thread
         forever begin: result_monitor_block
             @(posedge clk);
-            /* maybe include a wait here? */
+            #2 /* wait for result to populate */
             result_monitor_h.write_to_monitor(result);
         end: result_monitor_block        
     end : result_monitor_thread

@@ -4,8 +4,8 @@
  this sequence makes use of stimulus defined in other sequences
 */
 
-class run_sequence extends uvm_sequence #(uvm_sequence_item);
-    `uvm_object_utils(run_sequence);
+class run_sequences extends uvm_sequence #(uvm_sequence_item);
+    `uvm_object_utils(run_sequences);
 
     protected sequencer sequencer_h;
     protected random_sequence random;
@@ -28,4 +28,4 @@ task body();
     random.start(sequencer_h);
 endtask : body
 
-endclass : run_sequence
+endclass : run_sequences

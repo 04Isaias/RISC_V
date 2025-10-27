@@ -12,6 +12,7 @@ package adder_pkg;
 typedef uvm_sequencer #(sequence_item) sequencer;
 
 `include "random_sequence.svh"
+`include "run_sequences.svh"
 
 `include "result_transaction.svh"
 

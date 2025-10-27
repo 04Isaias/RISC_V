@@ -1,7 +1,7 @@
 /* 
  October 26, 2025
  Isaias M Ramirez
- This sequence defines random stimulus to be injected into the testbench as ran by a test
+ This sequence defines random stimulus to be injected into the testbench
 */
 
 class random_sequence extends uvm_sequence #(sequence_item);

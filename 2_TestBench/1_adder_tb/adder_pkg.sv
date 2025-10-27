@@ -22,10 +22,6 @@ typedef uvm_sequencer #(sequence_item) sequencer;
 
 `include "env.svh"
 
-
-`include "random_sequence.svh"
-
-
 `include "adder_base_test.svh"
 `include "random_adder_test.svh"
 

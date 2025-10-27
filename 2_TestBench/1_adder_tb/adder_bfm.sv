@@ -12,7 +12,7 @@ interface adder_bfm;
 
     bit             clk;
 
-    wire [32 : 0]   result;
+    wire [31 : 0]   result;
 
     task send_add(input int iA, input int iB, output int adder_result);
         begin 

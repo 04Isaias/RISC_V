@@ -15,6 +15,7 @@ typedef uvm_sequencer #(sequence_item) sequencer;
 `include "run_sequences.svh"
 
 `include "result_transaction.svh"
+`include "command_monitor.svh"
 
 `include "driver.svh"
 `include "result_monitor.svh"

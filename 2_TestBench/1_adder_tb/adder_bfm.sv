@@ -22,6 +22,8 @@ interface adder_bfm;
         end
     endtask : send_add
 
+    command_monitor command_monitor_h;
+
     result_monitor result_monitor_h;
 
     initial begin: result_monitor_thread

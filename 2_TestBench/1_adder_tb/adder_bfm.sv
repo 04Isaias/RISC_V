@@ -16,21 +16,28 @@ interface adder_bfm;
 
     task send_add(input int iA, input int iB, output int adder_result);
         begin 
-            uint_32_a = iA;
-            uint_32_b = iB;
-            adder_result = result;
-        end
+            @(posedge clk)begin 
+                uint_32_a = iA;
+                uint_32_b = iB;
+            end
+            @(negedge clk)begin
+                adder_result = result;
+            end
+        end;
     endtask : send_add
 
     command_monitor command_monitor_h;
+
+    always @(posedge clk) begin : add_monitor
+        command_monitor_h.write_to_monitor(uint_32_a, uint_32_b);
+    end
 
     result_monitor result_monitor_h;
 
     initial begin: result_monitor_thread
         forever begin: result_monitor_block
-            @(posedge clk);
-            if(done)
-                result_monitor_h.write_to_monitor(result);
+            @(negedge clk);
+            result_monitor_h.write_to_monitor(result);
         end: result_monitor_block        
     end : result_monitor_thread
 

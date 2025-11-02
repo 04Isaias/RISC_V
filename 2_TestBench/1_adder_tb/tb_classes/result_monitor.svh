@@ -29,6 +29,7 @@ class result_monitor extends uvm_component;
         result_t = new("result_t");
         result_t.result = r;
         ap.write(result_t);
+        bfm.done = ~bfm.done;
     endfunction : write_to_monitor;
 
 endclass : result_monitor

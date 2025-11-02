@@ -23,7 +23,7 @@ class scoreboard extends uvm_subscriber #(result_transaction);
         predicted = new("predicted");
 
         predicted.result = cmd.uint_32_a + cmd.uint_32_b;
-
+        
         return predicted; 
 
     endfunction : predict_result

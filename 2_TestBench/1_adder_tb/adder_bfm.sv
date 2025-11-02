@@ -9,7 +9,7 @@ interface adder_bfm;
 
     int unsigned    uint_32_a;
     int unsigned    uint_32_b;
-
+    bit            done;
     bit             clk;
 
     wire [31 : 0]   result;
@@ -27,8 +27,8 @@ interface adder_bfm;
     initial begin: result_monitor_thread
         forever begin: result_monitor_block
             @(posedge clk);
-            #2 /* wait for result to populate */
-            result_monitor_h.write_to_monitor(result);
+            if(done)
+                result_monitor_h.write_to_monitor(result);
         end: result_monitor_block        
     end : result_monitor_thread
 

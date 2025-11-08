@@ -43,6 +43,7 @@ class scoreboard extends uvm_subscriber #(result_transaction);
             "/Predicted ", predicted.convert2string()
         };
 
+        $display(""); // added for formating
         if(!predicted.compare(t))
             `uvm_error("SELF CHECKER", {"FAIL", data_str})
         else

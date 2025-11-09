@@ -40,10 +40,11 @@ class result_transaction extends uvm_transaction;
         
         same = super.do_compare(rhs, comparer);
 
-        if($cast(RHS, rhs))
-            same = 0;
-        else
-        same = (result == RHS.result) && same;
+        if($cast(RHS, rhs))begin
+            same = (result == RHS.result) && same; 
+        end else 
+            $fatal(1, "FAILED to cast result transaction");
+               
         
         return same;
     endfunction : do_compare

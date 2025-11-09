@@ -14,8 +14,7 @@ class sequence_item extends uvm_sequence_item;
 
     rand int unsigned uint_32_a; 
     rand int unsigned uint_32_b;
-    
-    int unsigned result;
+
 
     /* define the distribution of random values, this increase the probability of 0 and max */
     constraint data { 
@@ -37,8 +36,7 @@ class sequence_item extends uvm_sequence_item;
         else
             same = super.do_compare(rhs, comparer) && /* deep comparison, parent object also compares */
             (tested.uint_32_a == uint_32_a) && 
-            (tested.uint_32_b == uint_32_b) && 
-            (tested.result == result);
+            (tested.uint_32_b == uint_32_b);
         return same;
     endfunction : do_compare
 
@@ -52,14 +50,13 @@ class sequence_item extends uvm_sequence_item;
             $fatal(1, "Failed to cast in do_copy");
         uint_32_a = RHS.uint_32_a;
         uint_32_b = RHS.uint_32_b;
-        result = RHS.result;
     endfunction : do_copy
 
     /*returns a sequence_item represented as a string */
     function string convert2string();
         string  s;
-        s = $sformatf("uint_32_a: %8h \n uint_32_a: %8h \n result: %8h", 
-            uint_32_a, uint_32_b, result);
+        s = $sformatf("\n A: %8H \n B: %8H \n", 
+            uint_32_a, uint_32_b);
         return s;
     endfunction : convert2string
 

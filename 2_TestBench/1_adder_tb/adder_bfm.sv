@@ -14,15 +14,13 @@ interface adder_bfm;
 
     wire [31 : 0]   result;
 
-    task send_add(input int iA, input int iB, output int adder_result);
+    task send_add(input int iA, input int iB);
         begin 
             @(posedge clk)begin 
                 uint_32_a = iA;
                 uint_32_b = iB;
             end
-            @(negedge clk)begin
-                adder_result = result;
-            end
+
         end;
     endtask : send_add
 

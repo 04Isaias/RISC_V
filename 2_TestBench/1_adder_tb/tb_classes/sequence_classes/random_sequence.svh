@@ -17,7 +17,7 @@ class random_sequence extends uvm_sequence #(sequence_item);
         repeat (10000) begin : random_loop
             command = sequence_item::type_id::create("command");
             start_item(command);
-            assert(command.randomize()); // this command is provided by uvm
+            assert(command.randomize()); // the randomize() function is provided by systemVerilog
             finish_item(command);
         end : random_loop
     endtask : body

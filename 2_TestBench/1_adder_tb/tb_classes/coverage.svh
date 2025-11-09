@@ -7,8 +7,8 @@
 class coverage extends uvm_subscriber #(sequence_item);
     `uvm_component_utils(coverage)
 
-    int unsigned uint_A;
-    int unsigned uint_B;
+    bit [31:0]  uint_A;
+    bit [31:0]  uint_B;
 
     covergroup zeros_or_ones;
         a_leg : coverpoint uint_A {

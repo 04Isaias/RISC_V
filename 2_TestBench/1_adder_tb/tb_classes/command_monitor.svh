@@ -27,10 +27,10 @@ class command_monitor extends uvm_component;
       bfm.command_monitor_h = this;
    endfunction : connect_phase
 
-   function void write_to_monitor(int unsigned uint_32_a, int unsigned uint_32_b);
+   function void write_to_monitor(bit [31:0]  uint_32_a, bit [31:0]  uint_32_b);
       sequence_item cmd;
       $display(""); // added for formating
-      `uvm_info ("COMMAND MONITOR", $sformatf(" A: %2H B: %2H",
+      `uvm_info ("COMMAND MONITOR", $sformatf(" A: %8H B: %8H",
                 uint_32_a, uint_32_b), UVM_HIGH);
       cmd = new("cmd");
       cmd.uint_32_a = uint_32_a;

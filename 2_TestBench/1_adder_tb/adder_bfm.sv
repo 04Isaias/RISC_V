@@ -7,14 +7,14 @@
 interface adder_bfm;
     import adder_pkg::*;
 
-    int unsigned    uint_32_a;
-    int unsigned    uint_32_b;
+    bit [31:0]     uint_32_a;
+    bit [31:0]     uint_32_b;
     bit            done;
     bit             clk;
 
     wire [31 : 0]   result;
 
-    task send_add(input int iA, input int iB);
+    task send_add(bit [31:0] iA, bit [31:0] iB);
         begin 
             @(posedge clk)begin 
                 uint_32_a = iA;

@@ -7,7 +7,7 @@
 */
 
 class result_transaction extends uvm_transaction; 
-    int unsigned result;
+    bit [31:0] result;
 
     function new(string name = "");
         super.new(name);
@@ -27,7 +27,7 @@ class result_transaction extends uvm_transaction;
     /* convert a result_transaction into readable string format */
     function string convert2string();
         string s;
-        s = $sformatf("result: %4h", result);
+        s = $sformatf("result: %8h", result);
         return s;
     endfunction : convert2string
 

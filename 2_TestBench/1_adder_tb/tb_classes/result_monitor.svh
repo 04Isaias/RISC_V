@@ -24,7 +24,7 @@ class result_monitor extends uvm_component;
         bfm.result_monitor_h = this;
     endfunction : connect_phase
 
-    function void write_to_monitor(int unsigned r);
+    function void write_to_monitor(bit [32:0] r);
         result_transaction result_t;
         result_t = new("result_t");
         result_t.result = r;

@@ -4,7 +4,7 @@
  this abstract base test is used as a starting point for tests within this testbench
 */
 
-virtual class adder_base_test extends uvm_test; // is an ifdef needed for QUESTA?
+virtual class base_test extends uvm_test; // is an ifdef needed for QUESTA?
     env     env_h;
     sequencer sequencer_h;
 

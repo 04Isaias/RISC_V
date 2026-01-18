@@ -24,7 +24,12 @@ class result_transaction extends uvm_transaction;
         super.do_copy(rhs);
         assert($cast(copied_transaction_h, rhs))else
             $fatal(1, "Failed cast in do_copy");
-        result = copied_transaction_h.result;
+        eq = copied_transaction_h.eq;
+        neq = copied_transaction_h.neq;
+        lt = copied_transaction_h.lt;
+        lte = copied_transaction_h.lte;
+        gt = copied_transaction_h.gt;
+        gte = copied_transaction_h.gte;
     endfunction : do_copy
 
     /* convert a result_transaction into readable string format */
@@ -61,8 +66,6 @@ class result_transaction extends uvm_transaction;
             && same; 
         end else 
             $fatal(1, "FAILED to cast result transaction");
-               
-        
         return same;
     endfunction : do_compare
 

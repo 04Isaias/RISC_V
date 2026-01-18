@@ -1,7 +1,8 @@
 /* 
  October 25, 2025
  Isaias M Ramirez
- test that starts the random stimulus seqeunce. run_sequences is capable of running multiple sequenes and is left in for future development. 
+ test that starts the random stimulus seqeunce. 
+ run_sequences is capable of running multiple sequenes and is left in for future development. 
 */
 
 class random_test extends base_test;

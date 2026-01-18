@@ -9,11 +9,15 @@ package comparator_pkg;
 
 `include "sequence_item.svh"
 typedef uvm_sequencer #(sequence_item) sequencer;
+
 `include "result_transaction.svh"
+`include "command_monitor.svh"
 
 `include "driver.svh"
 `include "result_monitor.svh"
+`include "scoreboard.svh"
 `include "coverage.svh"
+
 
 `include "env.svh"
 

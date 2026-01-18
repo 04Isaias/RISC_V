@@ -24,6 +24,30 @@ interface comparator_bfm;
         end
     endtask : send_comp
 
+    command_monitor command_monitor_h;
+
+    always @(posedge clk) begin: add_monitor
+        command_monitor_h.write_to_monitor(A, B);
+    end
+
     result_monitor result_monitor_h;
+
+    initial begin: result_monitor_thread
+        forever begin: result_monitor_block
+            @(negedge clk);
+            result_monitor_h.write_to_monitor(eq, neq, lt, lte, gt, gte);
+        end: result_monitor_block
+    end : result_monitor_thread
+    
+    initial begin
+        clk = 0;
+        fork
+            forever begin
+                #10
+                clk = ~clk;
+            end
+        join_none
+    end
+    
 
 endinterface : comparator_bfm

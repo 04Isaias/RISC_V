@@ -21,7 +21,7 @@ module comparator_top;
         .lt(bfm.lt),
         .lte(bfm.lte),
         .gt(bfm.gt),
-        .gte(bfm.gte),
+        .gte(bfm.gte)
     );
 
     initial begin

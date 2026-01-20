@@ -1,6 +1,7 @@
 -- January 2, 2026
 -- Isaias M Ramirez
 -- The circuit described within this file defaults to a 32-bit comparator.
+-- here A is compared to B, for example: is A > B ? then 1 otherwise 0
 library IEEE;
 use IEEE.STD_LOGIC_1164.all;
 

@@ -30,7 +30,7 @@ class command_monitor extends uvm_component;
     function void write_to_monitor(bit [31:0] A, bit [31:0] B);
         sequence_item cmd;
         $display("");//
-        `uvm_info ("COMMAND MONITOR", $sformat("A: %8H B: %8H", 
+        `uvm_info ("COMMAND MONITOR", $sformatf("A: %8H B: %8H", 
                     A, B ), UVM_HIGH);
         cmd = new("cmd");
         cmd.uint_32_a = A;

@@ -45,8 +45,8 @@ class scoreboard extends uvm_subscriber #(result_transaction);
         predicted = predict_result (cmd);
 
         data_str = {
-            cmd.convert2string(), " Actual ", t.convert2string(),
-            "\n Predicted", predicted.convert2string()
+            cmd.convert2string(), "\n ****Actual Values**** \n", t.convert2string(),
+            "\n ****Predicted Values**** \n", predicted.convert2string()
         };
 
         $display(""); // added for formating

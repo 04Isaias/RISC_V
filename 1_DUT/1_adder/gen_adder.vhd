@@ -8,10 +8,11 @@ use IEEE.STD_LOGIC_1164.all;
 entity gen_adder is
     generic(num_bits : integer := 32);
     port(
+        carry_in    : in    STD_LOGIC := '0';
         uint_1      : in    STD_LOGIC_VECTOR ( num_bits - 1 downto 0 );
         uint_2      : in    STD_LOGIC_VECTOR ( num_bits - 1 downto 0 );
         uint_sum    : out   STD_LOGIC_VECTOR ( num_bits - 1 downto 0 );
-        over_flow   : out   STD_LOGIC
+        gen_adder_c_out       : out   STD_LOGIC
     );
 end gen_adder;
 
@@ -31,7 +32,7 @@ architecture structural_arch of gen_adder is
     end component; 
 begin
     -- create 8 adders and connect their carries together
-    carry_i(0) <= '0';
+    carry_i(0) <= carry_in;
     gen : for index in 0 to ( num_bits/4 - 1) generate
         a0 : cla_adder
             generic map(num_bits => 4)
@@ -43,6 +44,6 @@ begin
                 c_out => carry_i(index + 1)
             );
     end generate;
-    over_flow <= carry_i(num_bits/4);
+    gen_adder_c_out <= carry_i(num_bits/4);
 
 end architecture structural_arch;

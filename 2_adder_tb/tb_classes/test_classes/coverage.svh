@@ -1,7 +1,7 @@
 /* 
  October 25, 2025
  Isaias M Ramirez
- The coverage deifnes covergroups and coverpoints to achieve the desired coverage
+ The coverage defines covergroups and coverpoints to achieve the desired coverage
  this is necessary because we are using random constrained stimulus.
 */
 class coverage extends uvm_subscriber #(sequence_item);

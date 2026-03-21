@@ -15,10 +15,11 @@ module adder_top;
     adder_bfm       bfm();
 
     gen_adder DUT (
+        .carry_in(), // not used; implement logic later
         .uint_1(bfm.uint_32_a), 
         .uint_2(bfm.uint_32_b), 
         .uint_sum(bfm.result),
-        .over_flow() // not used; implement logic later
+        .gen_adder_c_out() // not used; implement logic later
         );
 
 initial begin

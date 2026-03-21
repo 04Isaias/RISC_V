@@ -7,10 +7,11 @@
 interface adder_bfm;
     import adder_pkg::*;
 
+    bit             carry_in;
     bit [31:0]     uint_32_a;
     bit [31:0]     uint_32_b;
-    bit            done;
-    bit             clk;
+    bit                 done;
+    bit                  clk;
 
     wire [31 : 0]   result;
 

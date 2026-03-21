@@ -3,7 +3,7 @@
  Isaias M Ramirez
  The scoreboard predicts the result of the DUT and prints it using the uvm.
 */
-class scoreboard extends uvm_subscriber #(result_transaction);
+class scoreboard extends uvm_subscriber #(result_transaction_adder);
     `uvm_component_utils(scoreboard);
 
 
@@ -17,8 +17,8 @@ class scoreboard extends uvm_subscriber #(result_transaction);
         cmd_f = new ("cmd_f", this);
     endfunction : build_phase
 
-    function result_transaction predict_result(sequence_item cmd);
-        result_transaction predicted;
+    function result_transaction_adder predict_result(sequence_item cmd);
+        result_transaction_adder predicted;
 
         predicted = new("predicted");
 
@@ -28,10 +28,10 @@ class scoreboard extends uvm_subscriber #(result_transaction);
 
     endfunction : predict_result
 
-    function void write(result_transaction t);
+    function void write(result_transaction_adder t);
         string data_str;
         sequence_item cmd;
-        result_transaction predicted;
+        result_transaction_adder predicted;
 
         if(!cmd_f.try_get(cmd))
             $fatal(1, "Missing command in self checker");

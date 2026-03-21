@@ -8,7 +8,7 @@ class result_monitor extends uvm_component;
     `uvm_component_utils(result_monitor);
 
     virtual adder_bfm bfm;
-    uvm_analysis_port #(result_transaction) ap;
+    uvm_analysis_port #(result_transaction_adder) ap;
 
     function new (string name, uvm_component parent);
         super.new(name, parent);
@@ -25,7 +25,7 @@ class result_monitor extends uvm_component;
     endfunction : connect_phase
 
     function void write_to_monitor(bit [32:0] r);
-        result_transaction result_t;
+        result_transaction_adder result_t;
         result_t = new("result_t");
         result_t.result = r;
         ap.write(result_t);

@@ -7,17 +7,19 @@
 interface adder_bfm;
     import adder_pkg::*;
 
-    bit             carry_in;
+    bit            carry_in;
     bit [31:0]     uint_32_a;
     bit [31:0]     uint_32_b;
+    bit            carry_out;
     bit                 done;
     bit                  clk;
 
     wire [31 : 0]   result;
 
-    task send_add(bit [31:0] iA, bit [31:0] iB);
+    task send_add(bit C_in, bit [31:0] iA, bit [31:0] iB);
         begin 
-            @(posedge clk)begin 
+            @(posedge clk)begin
+                carry_in = C_in; 
                 uint_32_a = iA;
                 uint_32_b = iB;
             end
@@ -28,7 +30,7 @@ interface adder_bfm;
     command_monitor command_monitor_h;
 
     always @(posedge clk) begin : add_monitor
-        command_monitor_h.write_to_monitor(uint_32_a, uint_32_b);
+        command_monitor_h.write_to_monitor(carry_in, uint_32_a, uint_32_b);
     end
 
     result_monitor result_monitor_h;
@@ -36,7 +38,7 @@ interface adder_bfm;
     initial begin: result_monitor_thread
         forever begin: result_monitor_block
             @(negedge clk);
-            result_monitor_h.write_to_monitor(result);
+            result_monitor_h.write_to_monitor(result, carry_out);
         end: result_monitor_block        
     end : result_monitor_thread
 

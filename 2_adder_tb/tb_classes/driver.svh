@@ -17,7 +17,7 @@ class driver extends uvm_driver #(sequence_item);
         sequence_item cmd;
         forever begin: cmd_loop
             seq_item_port.get_next_item(cmd);
-            bfm.send_add(cmd.uint_32_a,cmd.uint_32_b);
+            bfm.send_add(cmd.c_in, cmd.uint_32_a, cmd.uint_32_b);
             seq_item_port.item_done();
         end : cmd_loop
     endtask : run_phase

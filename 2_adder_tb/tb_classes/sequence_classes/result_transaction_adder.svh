@@ -8,6 +8,7 @@
 
 class result_transaction_adder extends uvm_transaction; 
     bit [31:0] result;
+    bit  c_out_result;
 
     function new(string name = "");
         super.new(name);
@@ -22,12 +23,13 @@ class result_transaction_adder extends uvm_transaction;
         assert($cast(copied_transaction_h, rhs))else
             $fatal(1, "Failed cast in do_copy");
         result = copied_transaction_h.result;
+        c_out_result = copied_transaction_h.c_out_result;
     endfunction : do_copy
 
     /* convert a result_transaction into readable string format */
     function string convert2string();
         string s;
-        s = $sformatf("result: %8h", result);
+        s = $sformatf("result: %8h c: %b", result, c_out_result);
         return s;
     endfunction : convert2string
 
@@ -41,7 +43,7 @@ class result_transaction_adder extends uvm_transaction;
         same = super.do_compare(rhs, comparer);
 
         if($cast(RHS, rhs))begin
-            same = (result == RHS.result) && same; 
+            same = (result == RHS.result) && ( c_out_result == RHS.c_out_result ) && same; 
         end else 
             $fatal(1, "FAILED to cast result transaction");
                

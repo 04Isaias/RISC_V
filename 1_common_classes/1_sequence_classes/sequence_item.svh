@@ -12,6 +12,7 @@ class sequence_item extends uvm_sequence_item;
         super.new(name);
     endfunction : new
 
+    rand bit           c_in;
     rand bit [31:0] uint_32_a; 
     rand bit [31:0] uint_32_b;
 
@@ -34,6 +35,7 @@ class sequence_item extends uvm_sequence_item;
         uint_32_b dist { 32'h0000_0000 := 1,
                          [32'h0000_0001 : 32'hFFFF_FFFE]:/ 1,
                          32'hFFFF_FFFF:= 1 };
+        c_in      dist {0 := 1, 1 := 1};
     }
 
     /* deep compares two sequence items to check if they are the same. 
@@ -50,7 +52,8 @@ class sequence_item extends uvm_sequence_item;
         else
             same = super.do_compare(rhs, comparer) && /* deep comparison, parent object also compares */
             (tested.uint_32_a == uint_32_a) && 
-            (tested.uint_32_b == uint_32_b);
+            (tested.uint_32_b == uint_32_b) &&
+            (tested.c_in == c_in);
         return same;
     endfunction : do_compare
 
@@ -64,13 +67,14 @@ class sequence_item extends uvm_sequence_item;
             $fatal(1, "Failed to cast in do_copy");
         uint_32_a = RHS.uint_32_a;
         uint_32_b = RHS.uint_32_b;
+        c_in = RHS.c_in;
     endfunction : do_copy
 
     /*returns a sequence_item represented as a string */
     function string convert2string();
         string  s;
-        s = $sformatf("\n A: %8H \n B: %8H \n", 
-            uint_32_a, uint_32_b);
+        s = $sformatf("\n C_in: %b \n A: %8H  \n B: %8H \n", 
+                        c_in, uint_32_a, uint_32_b);
         return s;
     endfunction : convert2string
 

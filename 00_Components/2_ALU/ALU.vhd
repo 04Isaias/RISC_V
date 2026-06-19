@@ -3,7 +3,7 @@
 -- The circuit described within this file
 -- defaults to a 32-bit ALU with the following features
 -- N negative flag      Z zero flag     C carry out flag        V overflow flag
--- A + B Sum            A - B sum       A AND B                 A OR B
+-- A + B Sum (00)       A - B Sum (01)  A AND B(10)             A OR B (11)
 -- future features: Multiplication, Division, Magnitude comparison
 library IEEE;
 use IEEE.STD_LOGIC_1164.all;
@@ -103,7 +103,7 @@ begin
     Z <= AND (NOT r_mux_out);
     -- Negative Flag
     N <= r_mux_out(num_bits - 1); -- last bit
-    -- comput carry only for sum and subtraction opperations only
+    -- compute carry only for sum and subtraction opperations only
     C <= adder_c_out AND (NOT ALUControl(1));
     -- compute overflow for when (only sum and subtraction and when A and B have oposite signs)
     -- AND the sign is incorrect 

@@ -1,7 +1,7 @@
 /* 
  October 25, 2025
  Isaias M Ramirez
- The driver class sends data throught the BFM when a sequence_item is ready
+ The driver class sends data through the BFM when a sequence_item is ready
 */
 class driver extends uvm_driver #(sequence_item);
     `uvm_component_utils(driver)

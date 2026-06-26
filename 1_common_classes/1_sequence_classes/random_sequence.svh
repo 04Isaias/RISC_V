@@ -4,10 +4,10 @@
  This sequence defines random stimulus to be injected into the testbench
 */
 
-class random_sequence extends uvm_sequence #(sequence_item);
+class random_sequence extends uvm_sequence #(base_sequence_item);
     `uvm_object_utils(random_sequence);
 
-    sequence_item command; 
+    base_sequence_item command; 
 
     function new(string name = "random_sequence");
         super.new(name);
@@ -15,7 +15,7 @@ class random_sequence extends uvm_sequence #(sequence_item);
 
     task body();
         repeat (10000) begin : random_loop
-            command = sequence_item::type_id::create("command");
+            command = base_sequence_item::type_id::create("command");
             start_item(command);
             assert(command.randomize()); // the randomize() function is provided by systemVerilog
             finish_item(command);

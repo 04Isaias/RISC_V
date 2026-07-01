@@ -4,18 +4,18 @@
  The result monitor publishes the tesbench results when they become available
 */
 
-class result_monitor extends uvm_component;
-    `uvm_component_utils(result_monitor);
+class ALU_result_monitor extends uvm_component;
+    `uvm_component_utils(ALU_result_monitor);
 
-    virtual adder_bfm bfm;
-    uvm_analysis_port #(result_transaction_adder) ap;
+    virtual ALU_bfm bfm;
+    uvm_analysis_port #(ALU_result_transaction) ap;
 
     function new (string name, uvm_component parent);
         super.new(name, parent);
     endfunction : new
 
     function void build_phase(uvm_phase phase);
-        if(!uvm_config_db #(virtual adder_bfm)::get(null, "*", "bfm", bfm))
+        if(!uvm_config_db #(virtual ALU_bfm)::get(null, "*", "bfm", bfm))
             `uvm_fatal("DRIVER", "Failed to get BFM");
         ap = new("ap", this);
     endfunction : build_phase
@@ -24,13 +24,16 @@ class result_monitor extends uvm_component;
         bfm.result_monitor_h = this;
     endfunction : connect_phase
 
-    function void write_to_monitor(bit [31:0] r, bit r_carry);
-        result_transaction_adder result_t;
+    function void write_to_monitor(bit [31:0] r, bit N, bit Z, bit C, bit V );
+        ALU_result_transaction result_t;
         result_t = new("result_t");
         result_t.result = r;
-        result_t.c_out_result = r_carry;
+        result_t.N = N;
+        result_t.Z = Z;
+        result_t.C = C;
+        result_t.V = V;
         ap.write(result_t);
         bfm.done = ~bfm.done;
     endfunction : write_to_monitor;
 
-endclass : result_monitor
+endclass : ALU_result_monitor

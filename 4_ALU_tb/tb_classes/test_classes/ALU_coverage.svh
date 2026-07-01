@@ -4,27 +4,29 @@
  The coverage defines covergroups and coverpoints to achieve the desired coverage
  this is necessary because we are using random constrained stimulus.
 */
-class coverage extends uvm_subscriber #(sequence_item);
-    `uvm_component_utils(coverage)
+class ALU_coverage extends uvm_subscriber #(ALU_sequence_item);
+    `uvm_component_utils(ALU_coverage)
 
-    bit         c_in;
-    bit [31:0]  uint_A;
-    bit [31:0]  uint_B;
+    bit [1:0]   control;
+    bit [31:0]  A;
+    bit [31:0]  B;
     
 
     covergroup zeros_or_ones;
-        c_leg : coverpoint c_in{
-            bins zero = {1'b0};
-            bins one  = {1'b1};
+        c_leg : coverpoint control{
+            bins add = {2'b00};
+            bins sub = {2'b01};
+            bins and_opp = {2'b10};
+            bins or_opp  = {2'b11};
         }
 
-        a_leg : coverpoint uint_A {
+        a_leg : coverpoint A {
             bins zeros = {32'h0000_0000};
             bins others = {[32'h0000_0001 : 32'hFFFF_FFFE]};
             bins ones = {32'hFFFF_FFFF};
         }
 
-        b_leg : coverpoint uint_B {
+        b_leg : coverpoint B {
             bins zeros = {32'h0000_0000};
             bins others = {[32'h0000_0001 : 32'hFFFF_FFFE]};
             bins ones = {32'hFFFF_FFFF};
@@ -32,9 +34,12 @@ class coverage extends uvm_subscriber #(sequence_item);
 
         all_comb: cross c_leg, a_leg, b_leg {
             // make sure interesting values are covered, ignore all others.
-            bins add_00 = binsof(c_leg.zero) && binsof(a_leg.zeros) &&  binsof(b_leg.zeros); 
-            bins add_FF_cc = binsof(c_leg.one) && binsof(a_leg.ones) && binsof(b_leg.ones); 
-            bins add_FF = binsof(a_leg.ones) && binsof(b_leg.ones); 
+            bins add_zeros = binsof(c_leg.add) && binsof(a_leg.zeros) && binsof(b_leg.zeros); 
+            bins add_ones  = binsof(c_leg.add) && binsof(a_leg.ones)  && binsof(b_leg.ones); 
+            bins sub_ones  = binsof(c_leg.sub) && binsof(a_leg.zeros) && binsof(b_leg.zeros); 
+            bins sub_zeros = binsof(c_leg.sub) && binsof(a_leg.ones)  && binsof(b_leg.ones); 
+            bins AND_ones  = binsof(c_leg.and_opp) && binsof(a_leg.ones)  && binsof(b_leg.ones); 
+            bins OR_ones   = binsof(c_leg.or_opp) && binsof(a_leg.ones)  && binsof(b_leg.ones); 
             ignore_bins others_only = binsof(a_leg.others) && binsof(b_leg.others);
         }
     endgroup
@@ -44,11 +49,11 @@ class coverage extends uvm_subscriber #(sequence_item);
         zeros_or_ones = new();
     endfunction : new
 
-    function void write ( sequence_item t);
-        uint_A = t.uint_32_a;
-        uint_B = t.uint_32_b;
-        c_in = t.c_in;
+    function void write ( ALU_sequence_item t);
+        A = t.A;
+        B = t.B;
+        control = t.control;
         zeros_or_ones.sample();
     endfunction : write
     
-endclass : coverage
+endclass : ALU_coverage

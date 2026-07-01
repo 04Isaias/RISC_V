@@ -5,11 +5,11 @@
  scoreboard and coverage objects for processing
 */
 
-class command_monitor extends uvm_component;
-   `uvm_component_utils(command_monitor);
+class ALU_command_monitor extends uvm_component;
+   `uvm_component_utils(ALU_command_monitor);
 
-   virtual adder_bfm bfm;
-   uvm_analysis_port #(sequence_item) ap;
+   virtual ALU_bfm bfm;
+   uvm_analysis_port #(ALU_sequence_item) ap;
 
    function new (string name, uvm_component parent);
       super.new(name,parent);
@@ -17,7 +17,7 @@ class command_monitor extends uvm_component;
 
    function void build_phase(uvm_phase phase);
 
-      if(!uvm_config_db #(virtual adder_bfm)::get(null, "*","bfm", bfm))
+      if(!uvm_config_db #(virtual ALU_bfm)::get(null, "*","bfm", bfm))
         `uvm_fatal("DRIVER", "Failed to get BFM")
 
       ap  = new("ap",this);
@@ -27,15 +27,15 @@ class command_monitor extends uvm_component;
       bfm.command_monitor_h = this;
    endfunction : connect_phase
 
-   function void write_to_monitor(bit c_in, bit [31:0]  uint_32_a, bit [31:0]  uint_32_b);
-      sequence_item cmd;
+   function void write_to_monitor(bit[1:0] control, bit [31:0]  A, bit [31:0]  B);
+      ALU_sequence_item cmd;
       $display(""); // added for formating
-      `uvm_info ("COMMAND MONITOR", $sformatf(" C: %b A: %8H B: %8H ",
-                 c_in, uint_32_a,uint_32_b), UVM_HIGH);
+      `uvm_info ("COMMAND MONITOR", $sformatf(" C: %2b A: %8H B: %8H ",
+                 control, A ,B), UVM_HIGH);
       cmd = new("cmd");
-      cmd.uint_32_a = uint_32_a;
-      cmd.uint_32_b = uint_32_b;
-      cmd.c_in = c_in;  
+      cmd.A = A;
+      cmd.B = B;
+      cmd.control = control;  
       ap.write(cmd);
    endfunction : write_to_monitor
-endclass : command_monitor
+endclass : ALU_command_monitor

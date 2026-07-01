@@ -6,7 +6,7 @@
  along with a few helpful functions for comparing, copying, and converting to string.
  */
 
-class ALU_result_transaction extends result_transaction; 
+class ALU_result_transaction extends base_result_transaction; 
     bit N;
     bit Z;
     bit C;
@@ -33,8 +33,8 @@ class ALU_result_transaction extends result_transaction;
     /* convert a result_transaction into readable string format */
     function string convert2string();
         string s;
-        super.convert2string();
-        s = $sformatf(" N: %b Z: %b C: %b V: %b ", N, Z, C, V);
+        s = super.convert2string();
+        s = $sformatf("%s N: %b Z: %b C: %b V: %b ",s, N, Z, C, V);
         return s;
     endfunction : convert2string
 

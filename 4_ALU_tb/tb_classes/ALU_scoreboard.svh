@@ -3,16 +3,17 @@
  Isaias M Ramirez
  The scoreboard predicts the result of the DUT and prints it using the uvm.
 */
-class scoreboard extends uvm_subscriber #(ALU_result_transaction);
-    `uvm_component_utils(scoreboard);
-
-    bit[31:0] result;
+class ALU_scoreboard extends uvm_subscriber #(ALU_result_transaction);
+    `uvm_component_utils(ALU_scoreboard);
+    bit [1:0]  opp;
+    bit [32:0] result;
     bit N;
     bit Z;
     bit C;
     bit V;
+
     
-    uvm_tlm_analysis_fifo #(sequence_item) cmd_f;
+    uvm_tlm_analysis_fifo #(ALU_sequence_item) cmd_f;
 
     function new (string name, uvm_component parent);
         super.new(name, parent);
@@ -22,23 +23,43 @@ class scoreboard extends uvm_subscriber #(ALU_result_transaction);
         cmd_f = new ("cmd_f", this);
     endfunction : build_phase
 
-    function ALU_result_transaction predict_result(sequence_item cmd);
+    function ALU_result_transaction predict_result(ALU_sequence_item cmd);
         ALU_result_transaction predicted;
-
         predicted = new("predicted");
-
-        add_result = cmd.c_in + cmd.uint_32_a + cmd.uint_32_b;
-        predicted.result = add_result[31:0];
-        predicted.c_out_result = add_result[32];
-        
+        opp = cmd.control;
+        //determine result based on OPP
+        case(opp)
+            2'b00: result =  cmd.A + cmd.B;
+            2'b01: result =  cmd.A - cmd.B;
+            2'b10: result =  cmd.A & cmd.B;
+            2'b11: result =  cmd.A | cmd.B;
+            default: result = 32'h0000_0000;
+        endcase
+        //set result on prediction
+        predicted.result = result[31:0];
+        //determine N flag
+        predicted.N = result[31];
+        //determine Z
+        predicted.Z = !(|result[31:0]);
+        //determine C
+        predicted.C = !opp[1] & result[32];
+        //determine V
+        predicted.V = 
+        (   !opp[1]
+            &
+            (result[31] ^ cmd.A[31]) 
+            &
+            !(^{opp[0],cmd.A[31],cmd.B[31]})
+        );
+            
         return predicted; 
 
     endfunction : predict_result
 
-    function void write(result_transaction_adder t);
+    function void write(ALU_result_transaction t);
         string data_str;
-        sequence_item cmd;
-        result_transaction_adder predicted;
+        ALU_sequence_item cmd;
+        ALU_result_transaction predicted;
 
         if(!cmd_f.try_get(cmd))
             $fatal(1, "Missing command in self checker");
@@ -57,4 +78,4 @@ class scoreboard extends uvm_subscriber #(ALU_result_transaction);
             `uvm_info ("SELF CHECKER", {"PASS", data_str}, UVM_HIGH)
         
     endfunction : write
-endclass : scoreboard
+endclass : ALU_scoreboard

@@ -32,13 +32,13 @@ interface ALU_bfm;
         end;
     endtask : send_opp
 
-    command_monitor command_monitor_h;
+    ALU_command_monitor command_monitor_h;
 
     always @(posedge clk) begin : ALU_monitor
         command_monitor_h.write_to_monitor(control, A, B);
     end
 
-    result_monitor result_monitor_h;
+    ALU_result_monitor result_monitor_h;
 
     initial begin: result_monitor_thread
         forever begin: result_monitor_block

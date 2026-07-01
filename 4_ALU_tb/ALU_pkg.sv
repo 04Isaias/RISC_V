@@ -12,7 +12,7 @@ package ALU_pkg;
 `include "ALU_sequence_item.svh"
 typedef uvm_sequencer #(ALU_sequence_item) sequencer;
 
-`include "random_sequence.svh"
+`include "ALU_random_sequence.svh"
 `include "run_sequences.svh"
 
 `include "base_result_transaction.svh"

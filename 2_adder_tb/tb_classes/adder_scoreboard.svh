@@ -7,7 +7,7 @@ class scoreboard extends uvm_subscriber #(result_transaction_adder);
     `uvm_component_utils(scoreboard);
 
     bit[32:0] add_result;
-    uvm_tlm_analysis_fifo #(sequence_item) cmd_f;
+    uvm_tlm_analysis_fifo #(adder_sequence_item) cmd_f;
 
     function new (string name, uvm_component parent);
         super.new(name, parent);
@@ -17,12 +17,12 @@ class scoreboard extends uvm_subscriber #(result_transaction_adder);
         cmd_f = new ("cmd_f", this);
     endfunction : build_phase
 
-    function result_transaction_adder predict_result(sequence_item cmd);
+    function result_transaction_adder predict_result(adder_sequence_item cmd);
         result_transaction_adder predicted;
 
         predicted = new("predicted");
 
-        add_result = cmd.c_in + cmd.uint_32_a + cmd.uint_32_b;
+        add_result = cmd.c_in + cmd.A + cmd.B;
         predicted.result = add_result[31:0];
         predicted.c_out_result = add_result[32];
         
@@ -32,7 +32,7 @@ class scoreboard extends uvm_subscriber #(result_transaction_adder);
 
     function void write(result_transaction_adder t);
         string data_str;
-        sequence_item cmd;
+        adder_sequence_item cmd;
         result_transaction_adder predicted;
 
         if(!cmd_f.try_get(cmd))

@@ -4,12 +4,12 @@
  The coverage defines covergroups and coverpoints to achieve the desired coverage
  this is necessary because we are using random constrained stimulus.
 */
-class coverage extends uvm_subscriber #(sequence_item);
+class coverage extends uvm_subscriber #(adder_sequence_item);
     `uvm_component_utils(coverage)
 
     bit         c_in;
-    bit [31:0]  uint_A;
-    bit [31:0]  uint_B;
+    bit [31:0]  A;
+    bit [31:0]  B;
     
 
     covergroup zeros_or_ones;
@@ -18,13 +18,13 @@ class coverage extends uvm_subscriber #(sequence_item);
             bins one  = {1'b1};
         }
 
-        a_leg : coverpoint uint_A {
+        a_leg : coverpoint A {
             bins zeros = {32'h0000_0000};
             bins others = {[32'h0000_0001 : 32'hFFFF_FFFE]};
             bins ones = {32'hFFFF_FFFF};
         }
 
-        b_leg : coverpoint uint_B {
+        b_leg : coverpoint B {
             bins zeros = {32'h0000_0000};
             bins others = {[32'h0000_0001 : 32'hFFFF_FFFE]};
             bins ones = {32'hFFFF_FFFF};
@@ -44,9 +44,9 @@ class coverage extends uvm_subscriber #(sequence_item);
         zeros_or_ones = new();
     endfunction : new
 
-    function void write ( sequence_item t);
-        uint_A = t.uint_32_a;
-        uint_B = t.uint_32_b;
+    function void write ( adder_sequence_item t);
+        A = t.A;
+        B = t.B;
         c_in = t.c_in;
         zeros_or_ones.sample();
     endfunction : write

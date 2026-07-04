@@ -9,7 +9,7 @@ class command_monitor extends uvm_component;
    `uvm_component_utils(command_monitor);
 
    virtual adder_bfm bfm;
-   uvm_analysis_port #(sequence_item) ap;
+   uvm_analysis_port #(adder_sequence_item) ap;
 
    function new (string name, uvm_component parent);
       super.new(name,parent);
@@ -27,14 +27,14 @@ class command_monitor extends uvm_component;
       bfm.command_monitor_h = this;
    endfunction : connect_phase
 
-   function void write_to_monitor(bit c_in, bit [31:0]  uint_32_a, bit [31:0]  uint_32_b);
-      sequence_item cmd;
+   function void write_to_monitor(bit c_in, bit [31:0]  A, bit [31:0]  B);
+      adder_sequence_item cmd;
       $display(""); // added for formating
       `uvm_info ("COMMAND MONITOR", $sformatf(" C: %b A: %8H B: %8H ",
-                 c_in, uint_32_a,uint_32_b), UVM_HIGH);
+                 c_in, A, B), UVM_HIGH);
       cmd = new("cmd");
-      cmd.uint_32_a = uint_32_a;
-      cmd.uint_32_b = uint_32_b;
+      cmd.A = A;
+      cmd.B = B;
       cmd.c_in = c_in;  
       ap.write(cmd);
    endfunction : write_to_monitor

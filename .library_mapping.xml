@@ -2,15 +2,15 @@
 <com.sigasi.hdt.shared.librarymapping.model:LibraryMappings xmlns:com.sigasi.hdt.shared.librarymapping.model="com.sigasi.hdt.vhdl.scoping.librarymapping" Version="2">
   <Mappings Location="Common Libraries/IEEE" Library="ieee"/>
   <Mappings Location="Common Libraries/IEEE Synopsys" Library="ieee"/>
+  <Mappings Location="00_Components/0_adder" Library="not mapped"/>
   <Mappings Location="00_Components/1_comparator" Library="not mapped"/>
-  <Mappings Location="00_Components/2_ALU" Library="not mapped"/>
   <Mappings Location="00_Components/99_basic" Library="not mapped"/>
   <Mappings Location="0_Documentation" Library="not mapped"/>
   <Mappings Location="1_DUT/1_adder" Library="not mapped"/>
   <Mappings Location="1_common_classes/3_result_transactions" Library="not mapped"/>
   <Mappings Location="2_TestBench/1_adder_tb" Library="not mapped"/>
+  <Mappings Location="2_adder_tb" Library="not mapped"/>
   <Mappings Location="3_comparator_tb" Library="not mapped"/>
-  <Mappings Location="4_ALU_tb" Library="not mapped"/>
   <Mappings Location="Common Libraries" Library="not mapped"/>
   <Mappings Location="Common Libraries/STD" Library="std"/>
   <Mappings Location="Common Libraries/UVM/uvm.sv" Library="uvm"/>

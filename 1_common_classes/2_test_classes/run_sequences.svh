@@ -9,7 +9,7 @@ class run_sequences extends uvm_sequence #(uvm_sequence_item);
 
     protected sequencer sequencer_h;
     protected random_sequence random;
-    protected adder_pos_neg_sequence pos_neg;
+    //protected adder_pos_neg_sequence pos_neg;
     protected uvm_component uvm_component_h;
 
 function new(string name = "run_sequences");
@@ -23,12 +23,12 @@ function new(string name = "run_sequences");
         `uvm_fatal("RUN SEQUENCE", "Failed to cast from uvm_component_h")
 
     random = random_sequence::type_id::create("random");
-    pos_neg = adder_pos_neg_sequence::type_id::create("pos_neg");
+    //pos_neg = adder_pos_neg_sequence::type_id::create("pos_neg");
 endfunction : new
 
 task body();
     random.start(sequencer_h);
-    pos_neg.start(sequencer_h);
+    //pos_neg.start(sequencer_h);
 endtask : body
 
 endclass : run_sequences

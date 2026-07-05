@@ -35,7 +35,7 @@ architecture mixed_arch of cla_adder is
     );
     end component;
 begin
--- p_i_generate generates all of the propogate values for the CLA
+-- p_i_generate generates all of the propagate values for the CLA
 p_i_generate: for bit_index in 0 to (num_bits -1) generate
     propagate_i(bit_index) <= a(bit_index) OR b(bit_index);
 end generate p_i_generate;

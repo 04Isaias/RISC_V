@@ -30,26 +30,30 @@ class ALU_scoreboard extends uvm_subscriber #(ALU_result_transaction);
         //determine result based on OPP
         case(opp)
             2'b00: result =  cmd.A + cmd.B;
-            2'b01: result =  cmd.A - cmd.B;
+            2'b01: result =  cmd.A + (~cmd.B + opp[0]);
             2'b10: result =  cmd.A & cmd.B;
             2'b11: result =  cmd.A | cmd.B;
-            default: result = 32'h0000_0000;
+            default: result = 33'h0000_0000;
         endcase
         //set result on prediction
         predicted.result = result[31:0];
         //determine N flag
         predicted.N = result[31];
         //determine Z
-        predicted.Z = !(|result[31:0]);
+        predicted.Z = ~(|result[31:0]);
         //determine C
-        predicted.C = !opp[1] & result[32];
+        case(opp)
+            2'b00: predicted.C = result[32];
+            2'b01: predicted.C = ~result[32]; //carry is inverse when subtracting
+            default: predicted.C = 1'b0;
+        endcase
         //determine V
         predicted.V = 
-        (   !opp[1]
+        (   ~opp[1]
             &
             (result[31] ^ cmd.A[31]) 
             &
-            !(^{opp[0],cmd.A[31],cmd.B[31]})
+            ~(^{opp[0],cmd.A[31],cmd.B[31]})
         );
             
         return predicted; 

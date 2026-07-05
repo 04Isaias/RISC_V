@@ -14,7 +14,7 @@ class random_sequence extends uvm_sequence #(adder_sequence_item);
     endfunction : new
 
     task body();
-        repeat (10000) begin : random_loop
+        repeat (5000) begin : random_loop
             command = adder_sequence_item::type_id::create("command");
             start_item(command);
             assert(command.randomize()); // the randomize() function is provided by systemVerilog

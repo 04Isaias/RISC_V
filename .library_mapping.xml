@@ -7,7 +7,7 @@
   <Mappings Location="00_Components/99_basic" Library="not mapped"/>
   <Mappings Location="0_Documentation" Library="not mapped"/>
   <Mappings Location="1_DUT/1_adder" Library="not mapped"/>
-  <Mappings Location="1_common_classes/1_sequence_classes/random_sequence.svh" Library="not mapped"/>
+  <Mappings Location="1_common_classes/3_result_transactions" Library="not mapped"/>
   <Mappings Location="2_TestBench/1_adder_tb" Library="not mapped"/>
   <Mappings Location="3_comparator_tb" Library="not mapped"/>
   <Mappings Location="4_ALU_tb" Library="not mapped"/>

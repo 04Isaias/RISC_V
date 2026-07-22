@@ -27,10 +27,10 @@ class ALU_command_monitor extends uvm_component;
       bfm.command_monitor_h = this;
    endfunction : connect_phase
 
-   function void write_to_monitor(bit[1:0] control, bit [31:0]  A, bit [31:0]  B);
+   function void write_to_monitor(bit[2:0] control, bit [31:0]  A, bit [31:0]  B);
       ALU_sequence_item cmd;
       $display(""); // added for formating
-      `uvm_info ("COMMAND MONITOR", $sformatf(" C: %2b A: %8H B: %8H ",
+      `uvm_info ("COMMAND MONITOR", $sformatf(" C: %3b A: %8H B: %8H ",
                  control, A ,B), UVM_HIGH);
       cmd = new("cmd");
       cmd.A = A;

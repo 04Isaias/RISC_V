@@ -12,12 +12,12 @@ class ALU_sequence_item extends base_sequence_item;
         super.new(name);
     endfunction : new
 
-    rand bit [1:0] control;
+    rand bit [2:0] control;
 
 
     /* define the distribution of random values, this increase the probability of 0 and max */
-    constraint data { 
-        control       dist { [2'b00:2'b11] := 1 };
+    constraint cntr_range { 
+        control       dist { [3'b000:3'b011 ] := 2, 3'b101 := 1};
     }
 
     /* deep compares two sequence items to check if they are the same. 
@@ -52,7 +52,7 @@ class ALU_sequence_item extends base_sequence_item;
     function string convert2string();
         string  s;
         super.convert2string();
-        s = $sformatf("\n control: %2b \n", control);
+        s = $sformatf("\n control: %3b \n", control);
         return s;
     endfunction : convert2string
 

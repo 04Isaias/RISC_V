@@ -5,11 +5,10 @@
 */
 class ALU_scoreboard extends uvm_subscriber #(ALU_result_transaction);
     `uvm_component_utils(ALU_scoreboard);
-    bit [1:0]  opp;
-    bit [32:0] result;
-    bit N;
-    bit Z;
-    bit C;
+    bit [2:0]  opp;
+    bit [32 : 0 ] result;
+    bit [32 : 0 ] subtraction;
+    bit [32 : 0 ] addition;
     bit V;
 
     
@@ -27,13 +26,27 @@ class ALU_scoreboard extends uvm_subscriber #(ALU_result_transaction);
         ALU_result_transaction predicted;
         predicted = new("predicted");
         opp = cmd.control;
+        // subtraction and addition seperated because it's used twice
+        subtraction = cmd.A + (~cmd.B + opp[0]);
+        addition = cmd.A + cmd.B;
+        //determine V before result since it's used in the case statement. (addition/subtraction used based on first bit)
+        V = 
+        (   ~opp[1]
+            &
+            (( (subtraction[31] ^ cmd.A[31]) & opp[0] ) | ( (addition[31] ^ cmd.A[31]) & ~opp[0] ))
+            &
+            ~(^{opp[0],cmd.A[31],cmd.B[31]})
+        );
+        predicted.V = V;
         //determine result based on OPP
         case(opp)
-            2'b00: result =  cmd.A + cmd.B;
-            2'b01: result =  cmd.A + (~cmd.B + opp[0]);
-            2'b10: result =  cmd.A & cmd.B;
-            2'b11: result =  cmd.A | cmd.B;
-            default: result = 33'h0000_0000;
+            3'b000: result =  addition;
+            3'b001: result =  subtraction;
+            3'b010: result =  cmd.A & cmd.B;
+            3'b011: result =  cmd.A | cmd.B;
+            // put the slt result in bit 0, then zero extend the rest of the bits.
+            3'b101: result =  {(30)'(0),V ^ subtraction[31]};
+            default: result = 33'h0_0000_0000;
         endcase
         //set result on prediction
         predicted.result = result[31:0];
@@ -43,19 +56,11 @@ class ALU_scoreboard extends uvm_subscriber #(ALU_result_transaction);
         predicted.Z = ~(|result[31:0]);
         //determine C
         case(opp)
-            2'b00: predicted.C = result[32];
-            2'b01: predicted.C = ~result[32]; //carry is inverse when subtracting
+            3'b000: predicted.C = result[32];
+            3'b001: predicted.C = ~result[32]; //carry is inverse when subtracting
             default: predicted.C = 1'b0;
         endcase
-        //determine V
-        predicted.V = 
-        (   ~opp[1]
-            &
-            (result[31] ^ cmd.A[31]) 
-            &
-            ~(^{opp[0],cmd.A[31],cmd.B[31]})
-        );
-            
+
         return predicted; 
 
     endfunction : predict_result

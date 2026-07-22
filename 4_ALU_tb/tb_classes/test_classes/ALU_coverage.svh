@@ -7,17 +7,19 @@
 class ALU_coverage extends uvm_subscriber #(ALU_sequence_item);
     `uvm_component_utils(ALU_coverage)
 
-    bit [1:0]   control;
+    bit [2:0]   control;
     bit [31:0]  A;
     bit [31:0]  B;
     
 
     covergroup zeros_or_ones;
         c_leg : coverpoint control{
-            bins add = {2'b00};
-            bins sub = {2'b01};
-            bins and_opp = {2'b10};
-            bins or_opp  = {2'b11};
+            bins add = {3'b000};
+            bins sub = {3'b001};
+            bins and_opp = {3'b010};
+            bins or_opp  = {3'b011};
+            bins slt_opp = {3'b101};
+            bins others = {3'b100, 3'b110, 3'b111};
         }
 
         a_leg : coverpoint A {
@@ -39,8 +41,12 @@ class ALU_coverage extends uvm_subscriber #(ALU_sequence_item);
             bins sub_ones  = binsof(c_leg.sub) && binsof(a_leg.zeros) && binsof(b_leg.zeros); 
             bins sub_zeros = binsof(c_leg.sub) && binsof(a_leg.ones)  && binsof(b_leg.ones); 
             bins AND_ones  = binsof(c_leg.and_opp) && binsof(a_leg.ones)  && binsof(b_leg.ones); 
+            bins AND_zeros  = binsof(c_leg.and_opp) && binsof(a_leg.zeros)  && binsof(b_leg.zeros); 
             bins OR_ones   = binsof(c_leg.or_opp) && binsof(a_leg.ones)  && binsof(b_leg.ones); 
-            ignore_bins others_only = binsof(a_leg.others) && binsof(b_leg.others);
+            bins OR_zeros   = binsof(c_leg.or_opp) && binsof(a_leg.zeros)  && binsof(b_leg.zeros); 
+            bins slt_ones   = binsof(c_leg.slt_opp) && binsof(a_leg.ones)  && binsof(b_leg.ones);  
+            bins slt_zeros   = binsof(c_leg.slt_opp) && binsof(a_leg.zeros)  && binsof(b_leg.zeros);  
+            ignore_bins others_only = binsof(c_leg.others) && binsof(a_leg.others) && binsof(b_leg.others);
         }
     endgroup
 
@@ -49,7 +55,7 @@ class ALU_coverage extends uvm_subscriber #(ALU_sequence_item);
         zeros_or_ones = new();
     endfunction : new
 
-    function void write ( ALU_sequence_item t);
+    function void write ( ALU_sequence_item t );
         A = t.A;
         B = t.B;
         control = t.control;

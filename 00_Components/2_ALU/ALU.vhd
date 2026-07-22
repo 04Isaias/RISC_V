@@ -13,7 +13,7 @@ entity ALU is
     port(
         A       :   in      STD_LOGIC_VECTOR ( num_bits - 1 downto 0 );
         B       :   in      STD_LOGIC_VECTOR ( num_bits - 1 downto 0 );
-        control :   in      STD_LOGIC_VECTOR ( 1 downto 0 );
+        control :   in      STD_LOGIC_VECTOR ( 2 downto 0 );
         result  :   out     STD_LOGIC_VECTOR ( num_bits - 1 downto 0 );
         flags   :   out     STD_LOGIC_VECTOR ( 3 downto 0) 
     );
@@ -111,13 +111,13 @@ begin
               AND
               (NOT(ALUControl(0) XOR A(num_bits - 1) XOR B(num_bits - 1)))
               AND
-              (NOT(ALUControl(1)));
+              (NOT (OR(ALUControl(2 downto 1))));
     -- compute carry only for sum and subtraction opperations only
-    flags(1)<= adder_c_out AND (NOT ALUControl(1));
+    flags(1)<= adder_c_out AND (NOT (OR(ALUControl(2 downto 1))));
     -- compute the zero flag
     flags(2)<= AND (NOT r_mux_out);
     -- Negative Flag
-    flags(2)<= r_mux_out(num_bits - 1); -- last bit
+    flags(3)<= r_mux_out(num_bits - 1); -- last bit
 
     -- calculate set less than result, the first bit is the resultant, and the rest of the vector is zero extended. 
     SLT <= (0 => flags(0) XOR adder_sum_out(num_bits - 1), others => '0'); 

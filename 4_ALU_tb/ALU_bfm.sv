@@ -7,9 +7,10 @@
 interface ALU_bfm;
     import ALU_pkg::*;
 
-    bit [31:0]     A;
-    bit [31:0]     B;
-    bit [1:0]      control;
+    bit [31:0]    A;
+    bit [31:0]    B;
+    bit [2:0]     control;
+    bit [3:0]     flags;
     
     wire[31:0]    result;
     bit            N;
@@ -20,8 +21,7 @@ interface ALU_bfm;
     bit            done;
     bit            clk;
     
-
-    task send_opp(bit[1:0] icontrol, bit [31:0] iA, bit [31:0] iB);
+    task send_opp(bit[2:0] icontrol, bit [31:0] iA, bit [31:0] iB);
         begin 
             @(posedge clk)begin
                 control = icontrol; 
@@ -43,6 +43,10 @@ interface ALU_bfm;
     initial begin: result_monitor_thread
         forever begin: result_monitor_block
             @(negedge clk);
+            N = flags[3];
+            Z = flags[2];
+            C = flags[1];
+            V = flags[0];
             result_monitor_h.write_to_monitor(result, N, Z, C, V);
         end: result_monitor_block        
     end : result_monitor_thread

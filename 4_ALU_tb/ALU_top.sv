@@ -19,10 +19,7 @@ module ALU_top;
          .b(bfm.B), 
          .control(bfm.control), 
          .result(bfm.result), 
-         .n(bfm.N),
-         .c(bfm.C),
-         .z(bfm.Z),
-         .v(bfm.V)
+         .flags(bfm.flags)
         );
 
 initial begin

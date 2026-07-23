@@ -8,11 +8,11 @@ use IEEE.STD_LOGIC_1164.all;
 entity gen_adder is
     generic(num_bits : integer := 32);
     port(
-        carry_in                : in    STD_LOGIC := '0';
+        carry_in                : in    STD_LOGIC;
         uint_1                  : in    STD_LOGIC_VECTOR ( num_bits - 1 downto 0 );
         uint_2                  : in    STD_LOGIC_VECTOR ( num_bits - 1 downto 0 );
         uint_sum                : out   STD_LOGIC_VECTOR ( num_bits - 1 downto 0 );
-        gen_adder_c_out         : out   STD_LOGIC := '0'
+        gen_adder_c_out         : out   STD_LOGIC
     );
 end gen_adder;
 

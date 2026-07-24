@@ -1,0 +1,23 @@
+-- July 23, 2026
+-- Isaias M Ramirez
+-- The circuit described within this file
+-- is a sign extender that that extends
+-- a 12 bit input to a 32 bit word.
+-- sign extension means to copy the sign bit into 
+-- the most significant bits.
+library IEEE;
+use IEEE.STD_LOGIC_1164.all;
+
+entity sign_extender is 
+    port (
+        num_in   :   in  STD_LOGIC_VECTOR   ( 11 downto 0);
+        num_ext  :   out STD_LOGIC_VECTOR   ( 31 downto 0)
+    );
+end sign_extender;
+
+architecture rtl of sign_extender is
+begin
+    -- Replicate the input sign bit into the upper 20 bits, then concatenate
+    -- with the 12-bit input to form a 32-bit signed-extended result.
+    num_ext <= (31 downto 12 => num_in(num_in'high)) & num_in;
+end rtl;

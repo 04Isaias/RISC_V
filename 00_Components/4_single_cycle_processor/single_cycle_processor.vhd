@@ -14,12 +14,12 @@ end single_cycle_processor;
 
 architecture struct of single_cycle_processor is
     -- internal signals
-    signal PCNext           :   STD_LOGIC_VECTOR ( num_bits - 1 downto 0 );
-    signal Instr            :   STD_LOGIC_VECTOR ( num_bits - 1 downto 0 );
-    signal SrcA             :   STD_LOGIC_VECTOR ( num_bits - 1 downto 0 );
-    signal SrcB             :   STD_LOGIC_VECTOR ( num_bits - 1 downto 0 );
-    signal ALUResult        :   STD_LOGIC_VECTOR ( num_bits - 1 downto 0 );
-    signal ReadData         :   STD_LOGIC_VECTOR ( num_bits - 1 downto 0 );
+    signal PCNext           :   STD_LOGIC_VECTOR ( num_bits_in_processor - 1 downto 0 );
+    signal Instr            :   STD_LOGIC_VECTOR ( num_bits_in_processor - 1 downto 0 );
+    signal SrcA             :   STD_LOGIC_VECTOR ( num_bits_in_processor - 1 downto 0 );
+    signal SrcB             :   STD_LOGIC_VECTOR ( num_bits_in_processor - 1 downto 0 );
+    signal ALUResult        :   STD_LOGIC_VECTOR ( num_bits_in_processor - 1 downto 0 );
+    signal ReadData         :   STD_LOGIC_VECTOR ( num_bits_in_processor - 1 downto 0 );
     -- declare components
     -- program counter declaration
     component pc is
@@ -29,13 +29,6 @@ architecture struct of single_cycle_processor is
             reset   :   in  STD_LOGIC;
             clk     :   in  STD_LOGIC;
             PC      :   out STD_LOGIC_VECTOR ( num_bits - 1 downto 0 )            
-        );
-    end component;
-    -- instruction memory declaration
-    component instruction_memory is
-        port(
-            address :   in  STD_LOGIC_VECTOR ( 31 downto 0);
-            readData :   in  STD_LOGIC_VECTOR ( 31 downto 0)
         );
     end component;
     -- register file declaration
@@ -67,21 +60,6 @@ architecture struct of single_cycle_processor is
             flags   :   out     STD_LOGIC_VECTOR ( 3 downto 0) 
         );
     end component;
-    -- data memory declaration
-    component data_memory is
-        generic (
-            num_bits      : integer := num_bits_in_processor;
-            num_registers : integer  -- depth defaults to 32 bits
-        );
-        port(
-            address      : in STD_LOGIC_VECTOR ( num_bits - 1 downto 0 );
-            write_data   : in STD_LOGIC_VECTOR ( num_bits - 1 downto 0 );
-            write_enable : in STD_LOGIC; 
-            clk          : in STD_LOGIC; 
-
-            read_data    : out STD_LOGIC_VECTOR ( num_bits - 1 downto 0 )
-        );
-    end component;
     -- generic adder declaration
     component gen_adder is
         generic(num_bits : integer := 32);
@@ -93,6 +71,7 @@ architecture struct of single_cycle_processor is
             gen_adder_c_out         : out   STD_LOGIC
         );        
     end component;
+    -- instruction memory and data_memory are external to the processor.
 begin
 
 end architecture struct;

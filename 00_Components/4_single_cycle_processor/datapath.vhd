@@ -84,7 +84,6 @@ architecture hybrid_arch of datapath is
     signal SrcA               : STD_LOGIC_VECTOR ( local_num_bits - 1 downto 0 );
     signal SrcB               : STD_LOGIC_VECTOR ( local_num_bits - 1 downto 0 );
     signal ALUResult          : STD_LOGIC_VECTOR ( local_num_bits - 1 downto 0 );
-    signal ReadData           : STD_LOGIC_VECTOR ( local_num_bits - 1 downto 0 );
     signal ImmExt             : STD_LOGIC_VECTOR ( local_num_bits - 1 downto 0 );
     signal PCPlus4            : STD_LOGIC_VECTOR ( local_num_bits - 1 downto 0 );
     
@@ -120,7 +119,7 @@ begin
             read_addr_1     => instruction( 19 downto 15),
             read_addr_2     => (others => '0'),
             write_addr_3    => instruction( 11 downto 7),
-            write_data      => ReadData,
+            write_data      => read_data,
             write_enable    => RegWrite,
             clk             => clk,
             read_data_1     => SrcA,

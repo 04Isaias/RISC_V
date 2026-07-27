@@ -76,7 +76,7 @@ architecture hybrid_arch of datapath is
     -- This sign exteder is not generic.
     component sign_extender is
         port (
-            num_in   :   in  STD_LOGIC_VECTOR   ( 11 downto 0);
+            num_in   :   in  STD_LOGIC_VECTOR   ( 24 downto 0);
             num_ext  :   out STD_LOGIC_VECTOR   ( 31 downto 0)
         );
     end component;
@@ -86,7 +86,7 @@ architecture hybrid_arch of datapath is
     signal ALUResult          : STD_LOGIC_VECTOR ( local_num_bits - 1 downto 0 );
     signal ReadData           : STD_LOGIC_VECTOR ( local_num_bits - 1 downto 0 );
     signal ImmExt             : STD_LOGIC_VECTOR ( local_num_bits - 1 downto 0 );
-    signal PCPlus4              : STD_LOGIC_VECTOR ( local_num_bits - 1 downto 0 );
+    signal PCPlus4            : STD_LOGIC_VECTOR ( local_num_bits - 1 downto 0 );
     
 
 begin
@@ -131,10 +131,18 @@ begin
         generic map (num_bits => local_num_bits)
         port map (
             A => SrcA,
-            B => immExt,
+            B => SrcB,
             control => (others => '0'),
-            result => alu_result,
+            result => ALUResult,
             flags => open
         );
+    alu_result <= ALUresult;
+    -- extender
+    my_extender : sign_extender
+        port map (
+            num_in  => instruction( 31 downto 7 ),
+            num_ext => ImmExt
+        );
+    SrcB <= ImmExt;
 
 end architecture hybrid_arch;

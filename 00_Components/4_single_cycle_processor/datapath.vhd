@@ -12,10 +12,12 @@ entity datapath is
         local_addr_size: integer := 5);
     port(
         instruction     : in    STD_LOGIC_VECTOR ( local_num_bits - 1 downto 0 );
-        read_data       : in    STD_LOGIC_VECTOR ( local_num_bits - 1 downto 0 );
+        ReadData        : in    STD_LOGIC_VECTOR ( local_num_bits - 1 downto 0 );
         clk             : in    STD_LOGIC;
         RegWrite        : in    STD_LOGIC;
         ImmSrc          : in    STD_LOGIC;
+        ALUSrc          : in    STD_LOGIC;
+        ResultSrc       : in    STD_LOGIC;
         pc_out          : out   STD_LOGIC_VECTOR ( local_num_bits - 1 downto 0 );
         alu_result      : out   STD_LOGIC_VECTOR ( local_num_bits - 1 downto 0 )
     );
@@ -82,12 +84,25 @@ architecture hybrid_arch of datapath is
             num_ext  :   out STD_LOGIC_VECTOR   ( 31 downto 0)
         );
     end component;
+    -- two to one mux
+    component my_2t1_mux is 
+        generic (num_bits : integer);
+        port (
+            A       : in    STD_LOGIC_VECTOR( num_bits - 1 downto 0);
+            B       : in    STD_LOGIC_VECTOR( num_bits - 1 downto 0);
+            control : in    STD_LOGIC;
+            result  : out   STD_LOGIC_VECTOR( num_bits - 1 downto 0)
+        );
+    end component;
     -- internal signal declarations
     signal SrcA               : STD_LOGIC_VECTOR ( local_num_bits - 1 downto 0 );
     signal SrcB               : STD_LOGIC_VECTOR ( local_num_bits - 1 downto 0 );
     signal ALUResult          : STD_LOGIC_VECTOR ( local_num_bits - 1 downto 0 );
     signal ImmExt             : STD_LOGIC_VECTOR ( local_num_bits - 1 downto 0 );
     signal PCPlus4            : STD_LOGIC_VECTOR ( local_num_bits - 1 downto 0 );
+    signal read_data_2        : STD_LOGIC_VECTOR ( local_num_bits - 1 downto 0 );
+    signal result_mux_out     : STD_LOGIC_VECTOR ( local_num_bits - 1 downto 0 );
+    
 begin
     -- wiring up the program counter
     my_pc : pc
@@ -116,14 +131,14 @@ begin
             address_var_size => local_addr_size
         )
         port map(
-            read_addr_1     => instruction( 19 downto 15),
-            read_addr_2     => (others => '0'),
-            write_addr_3    => instruction( 11 downto 7),
-            write_data      => read_data,
-            write_enable    => RegWrite,
+            read_addr_1     => instruction( 19 downto 15),  -- A1
+            read_addr_2     => (others => '0'),             -- A2
+            write_addr_3    => instruction( 11 downto 7),   -- A3
+            write_data      => result_mux_out,              -- WD3 in the schematic
+            write_enable    => RegWrite,                    
             clk             => clk,
-            read_data_1     => SrcA,
-            read_data_2     => open
+            read_data_1     => SrcA,                        -- RD1
+            read_data_2     => read_data_2                  -- RD2
         );
     -- Arithmetic Logic Unit
     my_alu : ALU
@@ -140,8 +155,27 @@ begin
     my_extender    : sign_extender
     port map (
             num_in  => instruction( 31 downto 7 ),
-            imm_src => ImmSrc, 
+            imm_src => ImmSrc, -- this signal is set when performing a sw instruction
             num_ext => ImmExt
         );
-    SrcB <= ImmExt;
+    -- muxes for R-type instruction support (add, sub, or, and, slt)
+    -- mux to select alu input between read_data_2 and immExt 
+    alusrd_mux : my_2t1_mux 
+    generic map (num_bits => local_num_bits)
+    port map (
+        A => read_data_2,
+        B => ImmExt,
+        control => ALUSrc,
+        result => SrcB
+     );
+     -- mux to select between the data memory input and the ALUResult
+    write_data_3_mux : my_2t1_mux
+    generic map ( num_bits => local_num_bits)
+    port map (
+        A => ALUResult, 
+        B => ReadData, 
+        control => ResultSrc, 
+        result => result_mux_out
+    );
+
 end architecture hybrid_arch;

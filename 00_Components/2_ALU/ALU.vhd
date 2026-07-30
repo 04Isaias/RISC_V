@@ -3,7 +3,7 @@
 -- The circuit described within this file
 -- defaults to a 32-bit ALU with the following features
 -- N negative flag      Z zero flag     C carry out flag        V overflow flag (flags: NZCV V is LSB)
--- A + B Sum (000)      A - B Sum (001)  A AND B(010)           A OR B (011)            A < B (101)
+-- A + B Sum (000)      A - B Sum (001)  A AND B(  )           A OR B (011)            A < B (101)
 -- future features: Multiplication, Division, Magnitude comparison
 library IEEE;
 use IEEE.STD_LOGIC_1164.all;
@@ -26,7 +26,7 @@ architecture structural_arch of ALU is
     signal adder_c_out          : STD_LOGIC                                  := '0';
     signal adder_sum_out        : STD_LOGIC_VECTOR ( num_bits - 1 downto 0 ) := (others => '0');
     signal ALUControl           : STD_LOGIC_VECTOR ( 2 downto 0 )            := (others => '0');
-    signal SLT                  : STD_LOGIC_VECTOR ( num_bits - 1 downto 0)  := (others => '0');
+    signal SLT                  : STD_LOGIC_VECTOR ( num_bits - 1 downto 0)  := (others => '0');  
     --declare components
     component my_2t1_mux is 
         generic(num_bits : integer); -- defaults to 32 bit

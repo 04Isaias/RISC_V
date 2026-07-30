@@ -14,4 +14,5 @@
   <Mappings Location="" Library="work"/>
   <Mappings Location="00_Components/3_CPU_components" Library="work"/>
   <Mappings Location="00_Components/4_single_cycle_processor" Library="work"/>
+  <Mappings Location="00_Components/99_basic" Library="work"/>
 </com.sigasi.hdt.shared.librarymapping.model:LibraryMappings>

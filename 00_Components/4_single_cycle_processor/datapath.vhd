@@ -15,6 +15,7 @@ entity datapath is
         read_data       : in    STD_LOGIC_VECTOR ( local_num_bits - 1 downto 0 );
         clk             : in    STD_LOGIC;
         RegWrite        : in    STD_LOGIC;
+        ImmSrc          : in    STD_LOGIC;
         pc_out          : out   STD_LOGIC_VECTOR ( local_num_bits - 1 downto 0 );
         alu_result      : out   STD_LOGIC_VECTOR ( local_num_bits - 1 downto 0 )
     );
@@ -77,6 +78,7 @@ architecture hybrid_arch of datapath is
     component sign_extender is
         port (
             num_in   :   in  STD_LOGIC_VECTOR   ( 24 downto 0);
+            imm_src  :   in  STD_LOGIC;
             num_ext  :   out STD_LOGIC_VECTOR   ( 31 downto 0)
         );
     end component;
@@ -86,8 +88,6 @@ architecture hybrid_arch of datapath is
     signal ALUResult          : STD_LOGIC_VECTOR ( local_num_bits - 1 downto 0 );
     signal ImmExt             : STD_LOGIC_VECTOR ( local_num_bits - 1 downto 0 );
     signal PCPlus4            : STD_LOGIC_VECTOR ( local_num_bits - 1 downto 0 );
-    
-
 begin
     -- wiring up the program counter
     my_pc : pc
@@ -137,11 +137,11 @@ begin
         );
     alu_result <= ALUresult;
     -- extender
-    my_extender : sign_extender
-        port map (
+    my_extender    : sign_extender
+    port map (
             num_in  => instruction( 31 downto 7 ),
+            imm_src => ImmSrc, 
             num_ext => ImmExt
         );
     SrcB <= ImmExt;
-
 end architecture hybrid_arch;

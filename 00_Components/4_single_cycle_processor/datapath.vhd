@@ -13,11 +13,12 @@ entity datapath is
     port(
         instruction     : in    STD_LOGIC_VECTOR ( local_num_bits - 1 downto 0 );
         ReadData        : in    STD_LOGIC_VECTOR ( local_num_bits - 1 downto 0 );
+        ImmSrc          : in    STD_LOGIC_VECTOR ( 1 downto 0);
         clk             : in    STD_LOGIC;
         RegWrite        : in    STD_LOGIC;
-        ImmSrc          : in    STD_LOGIC;
         ALUSrc          : in    STD_LOGIC;
         ResultSrc       : in    STD_LOGIC;
+        PCSrc           : in    STD_LOGIC;
         pc_out          : out   STD_LOGIC_VECTOR ( local_num_bits - 1 downto 0 );
         alu_result      : out   STD_LOGIC_VECTOR ( local_num_bits - 1 downto 0 )
     );
@@ -76,11 +77,12 @@ architecture hybrid_arch of datapath is
         );
     end component;
     -- sign extender declaration
-    -- This sign exteder is not generic.
+    -- This sign exteder is not generic
+    -- it's 
     component sign_extender is
         port (
-            num_in   :   in  STD_LOGIC_VECTOR   ( 24 downto 0);
-            imm_src  :   in  STD_LOGIC;
+            num_in   :   in  STD_LOGIC_VECTOR   ( 23 downto 0);
+            imm_src  :   in  STD_LOGIC_VECTOR   ( 1 downto 0);
             num_ext  :   out STD_LOGIC_VECTOR   ( 31 downto 0)
         );
     end component;
@@ -102,13 +104,24 @@ architecture hybrid_arch of datapath is
     signal PCPlus4            : STD_LOGIC_VECTOR ( local_num_bits - 1 downto 0 );
     signal read_data_2        : STD_LOGIC_VECTOR ( local_num_bits - 1 downto 0 );
     signal result_mux_out     : STD_LOGIC_VECTOR ( local_num_bits - 1 downto 0 );
+    signal PCTarget           : STD_LOGIC_VECTOR ( local_num_bits - 1 downto 0 );
+    signal PCNext           : STD_LOGIC_VECTOR ( local_num_bits - 1 downto 0 );
     
 begin
+    -- mux that provides input for the program counter
+    pc_next : my_2t1_mux
+        generic map ( num_bits => local_num_bits)
+        port map (
+            A       => PCPlus4,
+            B       => PCTarget,
+            control => PCSrc,
+            result  => PCNext 
+        );
     -- wiring up the program counter
     my_pc : pc
         generic map ( num_bits => local_num_bits)
         port map(
-            PCNext => PCPlus4, 
+            PCNext => PCNext, 
             reset  => '0', -- no reset yet
             clk    => clk,
             PC     => pc_out
@@ -155,7 +168,7 @@ begin
     my_extender    : sign_extender
     port map (
             num_in  => instruction( 31 downto 7 ),
-            imm_src => ImmSrc, -- this signal is set when performing a sw instruction
+            imm_src => ImmSrc, 
             num_ext => ImmExt
         );
     -- muxes for R-type instruction support (add, sub, or, and, slt)
@@ -168,6 +181,17 @@ begin
         control => ALUSrc,
         result => SrcB
      );
+     -- adder to compute the branch target address
+    PCTarget_adder : gen_adder
+    generic map ( num_bits => local_num_bits )
+    port map (
+        carry_in        => open, 
+        uint_1          => pc_out,
+        uint_2          => ImmExt,
+        uint_sum        => PCTarget,
+        gen_adder_c_out => open
+
+    );
      -- mux to select between the data memory input and the ALUResult
     write_data_3_mux : my_2t1_mux
     generic map ( num_bits => local_num_bits)

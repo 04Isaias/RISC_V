@@ -24,7 +24,7 @@ entity datapath is
     );
 end datapath;
 
-architecture hybrid_arch of datapath is 
+architecture struct_arch of datapath is 
     -- program counter declaration
     component pc is
         generic(num_bits : integer);
@@ -202,4 +202,4 @@ begin
         result => result_mux_out
     );
 
-end architecture hybrid_arch;
+end architecture struct_arch;

@@ -4,7 +4,9 @@
   <Mappings Location="Common Libraries/IEEE Synopsys" Library="ieee"/>
   <Mappings Location="00_Components" Library="not mapped"/>
   <Mappings Location="0_Documentation" Library="not mapped"/>
+  <Mappings Location="1_TB_Components" Library="not mapped"/>
   <Mappings Location="1_common_classes" Library="not mapped"/>
+  <Mappings Location="2_TB_Components" Library="not mapped"/>
   <Mappings Location="2_adder_tb" Library="not mapped"/>
   <Mappings Location="3_comparator_tb" Library="not mapped"/>
   <Mappings Location="4_ALU_tb" Library="not mapped"/>

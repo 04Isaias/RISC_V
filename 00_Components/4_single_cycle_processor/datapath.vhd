@@ -173,7 +173,7 @@ begin
         );
     -- muxes for R-type instruction support (add, sub, or, and, slt)
     -- mux to select alu input between read_data_2 and immExt 
-    alusrd_mux : my_2t1_mux 
+    SrcB_mux : my_2t1_mux 
     generic map (num_bits => local_num_bits)
     port map (
         A => read_data_2,
@@ -193,7 +193,7 @@ begin
 
     );
      -- mux to select between the data memory input and the ALUResult
-    write_data_3_mux : my_2t1_mux
+    result_mux : my_2t1_mux
     generic map ( num_bits => local_num_bits)
     port map (
         A => ALUResult, 

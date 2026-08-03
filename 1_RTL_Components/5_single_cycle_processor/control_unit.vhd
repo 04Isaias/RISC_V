@@ -8,8 +8,8 @@ use IEEE.STD_LOGIC_1164.all;
 entity control_unit is
     port (
         op          : in STD_LOGIC_VECTOR (6 downto 0);
-        funct3       : in STD_LOGIC_VECTOR (2 downto 0);
-        funct7       : in STD_LOGIC;
+        funct3      : in STD_LOGIC_VECTOR (2 downto 0);
+        funct7      : in STD_LOGIC;
         zero        : in STD_LOGIC;
 
         PCSrc       : out STD_LOGIC;

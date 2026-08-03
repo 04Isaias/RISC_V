@@ -20,7 +20,8 @@ entity datapath is
         ResultSrc       : in    STD_LOGIC;
         PCSrc           : in    STD_LOGIC;
         pc_out          : out   STD_LOGIC_VECTOR ( local_num_bits - 1 downto 0 );
-        alu_result      : out   STD_LOGIC_VECTOR ( local_num_bits - 1 downto 0 )
+        alu_result      : out   STD_LOGIC_VECTOR ( local_num_bits - 1 downto 0 );
+        WriteData       : out   STD_LOGIC_VECTOR ( local_num_bits - 1 downto 0 )
     );
 end datapath;
 
@@ -105,7 +106,7 @@ architecture struct_arch of datapath is
     signal read_data_2        : STD_LOGIC_VECTOR ( local_num_bits - 1 downto 0 );
     signal result_mux_out     : STD_LOGIC_VECTOR ( local_num_bits - 1 downto 0 );
     signal PCTarget           : STD_LOGIC_VECTOR ( local_num_bits - 1 downto 0 );
-    signal PCNext           : STD_LOGIC_VECTOR ( local_num_bits - 1 downto 0 );
+    signal PCNext             : STD_LOGIC_VECTOR ( local_num_bits - 1 downto 0 );
     
 begin
     -- mux that provides input for the program counter
@@ -201,5 +202,7 @@ begin
         control => ResultSrc, 
         result => result_mux_out
     );
+    WriteData <= read_data_2;
+    
 
 end architecture struct_arch;

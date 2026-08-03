@@ -6,72 +6,98 @@ library IEEE;
 use IEEE.STD_LOGIC_1164.all;
 
 entity single_cycle_processor is 
-    generic (num_bits_in_processor: integer := 32);
+    generic (num_bits: integer := 32);
     port(
-        nothing_yet : in STD_LOGIC
+        Instr       :   in  STD_LOGIC_VECTOR ( num_bits -1 downto 0);
+        ReadData    :   in  STD_LOGIC_VECTOR ( num_bits -1 downto 0);
+        CLK         :   in  STD_LOGIC;
+        reset       :   in  STD_LOGIC; 
+
+        PC          :   out STD_LOGIC_VECTOR (num_bits -1 downto 0);
+        WriteData   :   out STD_LOGIC_VECTOR (num_bits -1 downto 0);
+        DataAdr     :   out STD_LOGIC_VECTOR (num_bits -1 downto 0);
+        MemWrite    :   out STD_LOGIC
     );
 end single_cycle_processor;
 
 architecture struct of single_cycle_processor is
-    -- internal signals
-    signal PCNext           :   STD_LOGIC_VECTOR ( num_bits_in_processor - 1 downto 0 );
-    signal Instr            :   STD_LOGIC_VECTOR ( num_bits_in_processor - 1 downto 0 );
-    signal SrcA             :   STD_LOGIC_VECTOR ( num_bits_in_processor - 1 downto 0 );
-    signal SrcB             :   STD_LOGIC_VECTOR ( num_bits_in_processor - 1 downto 0 );
-    signal ALUResult        :   STD_LOGIC_VECTOR ( num_bits_in_processor - 1 downto 0 );
-    signal ReadData         :   STD_LOGIC_VECTOR ( num_bits_in_processor - 1 downto 0 );
-    -- declare components
-    -- program counter declaration
-    component pc is
-        generic( num_bits : integer := num_bits_in_processor ); 
+    -- declare control unit
+    component control_unit is
         port(
-            PCNext  :   in  STD_LOGIC_VECTOR ( num_bits - 1 downto 0 );
-            reset   :   in  STD_LOGIC;
-            clk     :   in  STD_LOGIC;
-            PC      :   out STD_LOGIC_VECTOR ( num_bits - 1 downto 0 )            
-        );
-    end component;
-    -- register file declaration
-    component register_file is
-        generic( 
-            num_bits         : integer := num_bits_in_processor;
-            num_register     : integer;   -- defaults to 32 bits
-            address_var_size : integer ); -- defaults to 5 bits
-        port(
-            read_addr_1  : in STD_LOGIC_VECTOR ( address_var_size - 1 downto 0);
-            read_addr_2  : in STD_LOGIC_VECTOR ( address_var_size - 1 downto 0);
-            write_addr_3 : in STD_LOGIC_VECTOR ( address_var_size - 1 downto 0);
-            write_data   : in STD_LOGIC_VECTOR ( num_bits - 1 downto 0);
-            write_enable : in STD_LOGIC;
-            clk          : in STD_LOGIC;
+            op          : in STD_LOGIC_VECTOR (6 downto 0);
+            funct3       : in STD_LOGIC_VECTOR (2 downto 0);
+            funct7       : in STD_LOGIC;
+            zero        : in STD_LOGIC;
 
-            read_data_1  : out STD_LOGIC_VECTOR ( num_bits - 1 downto 0);
-            read_data_2  : out STD_LOGIC_VECTOR ( num_bits - 1 downto 0)
+            PCSrc       : out STD_LOGIC;
+            ResultSrc   : out STD_LOGIC;
+            MemWrite    : out STD_LOGIC;
+            RegWrite    : out STD_LOGIC;
+            ALUSrc      : out STD_LOGIC;
+            ALUControl  : out STD_LOGIC_VECTOR ( 2 downto 0);
+            ImmSrc      : out STD_LOGIC_VECTOR ( 1 downto 0)
         );
     end component;
-    -- arithmetic logic unit declaration
-    component ALU is 
-        generic( num_bits : integer := num_bits_in_processor );
+    -- declare data path
+    component datapath  is 
+        generic (
+                local_num_bits   : integer;
+                local_addr_size  : integer
+        );
         port(
-            A       :   in      STD_LOGIC_VECTOR ( num_bits - 1 downto 0 );
-            B       :   in      STD_LOGIC_VECTOR ( num_bits - 1 downto 0 );
-            control :   in      STD_LOGIC_VECTOR ( 2 downto 0 );
-            result  :   out     STD_LOGIC_VECTOR ( num_bits - 1 downto 0 );
-            flags   :   out     STD_LOGIC_VECTOR ( 3 downto 0) 
+            instruction     : in    STD_LOGIC_VECTOR ( local_num_bits - 1 downto 0 );
+            ReadData        : in    STD_LOGIC_VECTOR ( local_num_bits - 1 downto 0 );
+            ImmSrc          : in    STD_LOGIC_VECTOR ( 1 downto 0);
+            clk             : in    STD_LOGIC;
+            RegWrite        : in    STD_LOGIC;
+            ALUSrc          : in    STD_LOGIC;
+            ResultSrc       : in    STD_LOGIC;
+            PCSrc           : in    STD_LOGIC;
+            pc_out          : out   STD_LOGIC_VECTOR ( local_num_bits - 1 downto 0 );
+            alu_result      : out   STD_LOGIC_VECTOR ( local_num_bits - 1 downto 0 )
         );
     end component;
-    -- generic adder declaration
-    component gen_adder is
-        generic(num_bits : integer := 32);
-        port(
-            carry_in                : in    STD_LOGIC;
-            uint_1                  : in    STD_LOGIC_VECTOR ( num_bits - 1 downto 0 );
-            uint_2                  : in    STD_LOGIC_VECTOR ( num_bits - 1 downto 0 );
-            uint_sum                : out   STD_LOGIC_VECTOR ( num_bits - 1 downto 0 );
-            gen_adder_c_out         : out   STD_LOGIC
-        );        
-    end component;
-    -- instruction memory and data_memory are external to the processor.
+    --declare internal signals
+    signal RegWrite    :   STD_LOGIC;
+    signal ImmSrc      :   STD_LOGIC_VECTOR ( 1 downto 0 );
+    signal ALUSrc      :   STD_LOGIC;
+    signal ALUControl  :   STD_LOGIC_VECTOR ( 2 downto 0 );
+    signal ResultSrc   :   STD_LOGIC;
+    signal PCSrc       :   STD_LOGIC;
+    signal zero        :   STD_LOGIC;
+    
 begin
+    my_datapath : datapath
+    generic map (
+        local_num_bits  => num_bits,
+        local_addr_size => 5
+    )
+    port map(
+        instruction => instr,
+        ReadData    => ReadData, 
+        ImmSrc      => ImmSrc,
+        clk         => clk,
+        RegWrite    => RegWrite,
+        ALUSrc      => ALUSrc, 
+        ResultSrc   => ResultSrc,
+        PCSrc       => PCSrc, 
+        pc_out      => PC,
+        alu_result  => DataAdr
+    );
 
+    my_control_unit : control_unit
+    port map(
+        op      => instr( 6  downto 0  ),
+        funct3  => instr( 14 downto 12 ),
+        funct7  => instr( 30 ),
+        zero => zero,
+        PCSrc => PCSrc,
+        ResultSrc => ResultSrc,
+        MemWrite => MemWrite,
+        RegWrite => RegWrite,
+        ALUSrc => ALUSrc, 
+        ALUControl => ALUControl,
+        ImmSrc => ImmSrc
+
+    );
 end architecture struct;

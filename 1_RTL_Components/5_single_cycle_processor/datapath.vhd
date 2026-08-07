@@ -14,11 +14,13 @@ entity datapath is
         instruction     : in    STD_LOGIC_VECTOR ( local_num_bits - 1 downto 0 );
         ReadData        : in    STD_LOGIC_VECTOR ( local_num_bits - 1 downto 0 );
         ImmSrc          : in    STD_LOGIC_VECTOR ( 1 downto 0);
+        ALUControl      : in    STD_LOGIC_VECTOR ( 2 downto 0);
         clk             : in    STD_LOGIC;
         RegWrite        : in    STD_LOGIC;
         ALUSrc          : in    STD_LOGIC;
         ResultSrc       : in    STD_LOGIC;
         PCSrc           : in    STD_LOGIC;
+        zero            : out   STD_LOGIC;
         pc_out          : out   STD_LOGIC_VECTOR ( local_num_bits - 1 downto 0 );
         alu_result      : out   STD_LOGIC_VECTOR ( local_num_bits - 1 downto 0 );
         WriteData       : out   STD_LOGIC_VECTOR ( local_num_bits - 1 downto 0 )
@@ -107,6 +109,7 @@ architecture struct_arch of datapath is
     signal result_mux_out     : STD_LOGIC_VECTOR ( local_num_bits - 1 downto 0 );
     signal PCTarget           : STD_LOGIC_VECTOR ( local_num_bits - 1 downto 0 );
     signal PCNext             : STD_LOGIC_VECTOR ( local_num_bits - 1 downto 0 );
+    signal flags              : STD_LOGIC_VECTOR ( 3 downto 0 );
     
 begin
     -- mux that provides input for the program counter
@@ -160,9 +163,9 @@ begin
         port map (
             A => SrcA,
             B => SrcB,
-            control => (others => '0'),
+            control => ALUControl,
             result => ALUResult,
-            flags => open
+            flags => flags
         );
     alu_result <= ALUresult;
     -- extender
@@ -203,6 +206,7 @@ begin
         result => result_mux_out
     );
     WriteData <= read_data_2;
+    zero <= flags(2);
     
 
 end architecture struct_arch;

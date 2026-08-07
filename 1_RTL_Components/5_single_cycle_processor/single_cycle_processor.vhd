@@ -11,7 +11,7 @@ entity single_cycle_processor is
         Instr       :   in  STD_LOGIC_VECTOR ( num_bits -1 downto 0);
         ReadData    :   in  STD_LOGIC_VECTOR ( num_bits -1 downto 0);
         CLK         :   in  STD_LOGIC;
-        reset       :   in  STD_LOGIC; 
+        --reset       :   in  STD_LOGIC;
 
         PC          :   out STD_LOGIC_VECTOR (num_bits -1 downto 0);
         WriteData   :   out STD_LOGIC_VECTOR (num_bits -1 downto 0);
@@ -47,14 +47,17 @@ architecture struct of single_cycle_processor is
         port(
             instruction     : in    STD_LOGIC_VECTOR ( local_num_bits - 1 downto 0 );
             ReadData        : in    STD_LOGIC_VECTOR ( local_num_bits - 1 downto 0 );
-            ImmSrc          : in    STD_LOGIC_VECTOR ( 1 downto 0);
+            ImmSrc          : in    STD_LOGIC_VECTOR ( 1 downto 0 );
+            ALUControl      : in    STD_LOGIC_VECTOR ( 2 downto 0 );
             clk             : in    STD_LOGIC;
             RegWrite        : in    STD_LOGIC;
             ALUSrc          : in    STD_LOGIC;
             ResultSrc       : in    STD_LOGIC;
             PCSrc           : in    STD_LOGIC;
+            zero            : out   STD_LOGIC;
             pc_out          : out   STD_LOGIC_VECTOR ( local_num_bits - 1 downto 0 );
-            alu_result      : out   STD_LOGIC_VECTOR ( local_num_bits - 1 downto 0 )
+            alu_result      : out   STD_LOGIC_VECTOR ( local_num_bits - 1 downto 0 );
+            WriteData       : out   STD_LOGIC_VECTOR ( local_num_bits - 1 downto 0 )
         );
     end component;
     --declare internal signals
@@ -67,6 +70,7 @@ architecture struct of single_cycle_processor is
     signal zero        :   STD_LOGIC;
     
 begin
+    
     my_datapath : datapath
     generic map (
         local_num_bits  => num_bits,
@@ -76,13 +80,16 @@ begin
         instruction => instr,
         ReadData    => ReadData, 
         ImmSrc      => ImmSrc,
+        ALUControl  => ALUControl,
         clk         => clk,
         RegWrite    => RegWrite,
         ALUSrc      => ALUSrc, 
         ResultSrc   => ResultSrc,
         PCSrc       => PCSrc, 
+        zero        => zero,
         pc_out      => PC,
-        alu_result  => DataAdr
+        alu_result  => DataAdr,
+        WriteData   => WriteData
     );
 
     my_control_unit : control_unit

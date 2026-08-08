@@ -21,11 +21,12 @@ architecture dataflow_arch of alu_decoder is
 begin
     controls <= (ALUOp & funct3 & op5 & funct7);
 
+    -- adding support for andi would be trivial. 
     with (controls) select
-        ALUControl <= "000" when "00-----"|"1000000"|"1000001"|"1000010", --lw,sw,add
-                      "001" when "01-----"|"1000011",                     -- beq
-                      "010" when "1011100",                               -- sub
-                      "011" when "1011000",                               -- or
-                      "101" when "1001000",                               -- slt
+        ALUControl <= "000" when "00-----"|"1000000"|"1000001"|"1000010", --lw,sw,add,addi
+                      "001" when "01-----"|"1000011",                     -- beq, sub
+                      "010" when "10111--",                               -- and
+                      "011" when "10110--",                               -- or, ori
+                      "101" when "10010--",                               -- slt, slti
                       (others=>'0') when others;
 end architecture dataflow_arch;

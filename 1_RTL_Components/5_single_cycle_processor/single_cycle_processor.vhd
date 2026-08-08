@@ -8,14 +8,14 @@ use IEEE.STD_LOGIC_1164.all;
 entity single_cycle_processor is 
     generic (num_bits: integer := 32);
     port(
-        Instr       :   in  STD_LOGIC_VECTOR ( num_bits -1 downto 0);
-        ReadData    :   in  STD_LOGIC_VECTOR ( num_bits -1 downto 0);
+        Instr       :   in  STD_LOGIC_VECTOR ( num_bits -1 downto 0 );
+        ReadData    :   in  STD_LOGIC_VECTOR ( num_bits -1 downto 0 );
         CLK         :   in  STD_LOGIC;
         reset       :   in  STD_LOGIC;
 
-        PC          :   out STD_LOGIC_VECTOR (num_bits -1 downto 0);
-        WriteData   :   out STD_LOGIC_VECTOR (num_bits -1 downto 0);
-        DataAdr     :   out STD_LOGIC_VECTOR (num_bits -1 downto 0);
+        PC          :   out STD_LOGIC_VECTOR ( num_bits -1 downto 0 );
+        WriteData   :   out STD_LOGIC_VECTOR ( num_bits -1 downto 0 );
+        DataAdr     :   out STD_LOGIC_VECTOR ( num_bits -1 downto 0 );
         MemWrite    :   out STD_LOGIC
     );
 end single_cycle_processor;
@@ -24,17 +24,17 @@ architecture struct of single_cycle_processor is
     -- declare control unit
     component control_unit is
         port(
-            op          : in STD_LOGIC_VECTOR (6 downto 0);
-            funct3      : in STD_LOGIC_VECTOR (2 downto 0);
+            op          : in STD_LOGIC_VECTOR ( 6 downto 0 );
+            funct3      : in STD_LOGIC_VECTOR ( 2 downto 0 );
             funct7      : in STD_LOGIC;
             zero        : in STD_LOGIC;
             PCSrc       : out STD_LOGIC;
-            ResultSrc   : out STD_LOGIC;
+            ResultSrc   : out STD_LOGIC_VECTOR ( 1 downto 0 );
             MemWrite    : out STD_LOGIC;
             RegWrite    : out STD_LOGIC;
             ALUSrc      : out STD_LOGIC;
-            ALUControl  : out STD_LOGIC_VECTOR ( 2 downto 0);
-            ImmSrc      : out STD_LOGIC_VECTOR ( 1 downto 0)
+            ALUControl  : out STD_LOGIC_VECTOR ( 2 downto 0 );
+            ImmSrc      : out STD_LOGIC_VECTOR ( 1 downto 0 )
         );
     end component;
     -- declare data path
@@ -51,7 +51,7 @@ architecture struct of single_cycle_processor is
             clk             : in    STD_LOGIC;
             RegWrite        : in    STD_LOGIC;
             ALUSrc          : in    STD_LOGIC;
-            ResultSrc       : in    STD_LOGIC;
+            ResultSrc       : in    STD_LOGIC_VECTOR ( 1 downto 0 );
             PCSrc           : in    STD_LOGIC;
             reset           : in    STD_LOGIC;
             zero            : out   STD_LOGIC;
@@ -65,7 +65,7 @@ architecture struct of single_cycle_processor is
     signal ImmSrc      :   STD_LOGIC_VECTOR ( 1 downto 0 );
     signal ALUSrc      :   STD_LOGIC;
     signal ALUControl  :   STD_LOGIC_VECTOR ( 2 downto 0 );
-    signal ResultSrc   :   STD_LOGIC;
+    signal ResultSrc   :   STD_LOGIC_VECTOR ( 1 downto 0 );
     signal PCSrc       :   STD_LOGIC;
     signal zero        :   STD_LOGIC;
     

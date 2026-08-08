@@ -18,7 +18,7 @@ entity datapath is
         clk             : in    STD_LOGIC;
         RegWrite        : in    STD_LOGIC;
         ALUSrc          : in    STD_LOGIC;
-        ResultSrc       : in    STD_LOGIC;
+        ResultSrc       : in    STD_LOGIC_VECTOR ( 1 downto 0);
         PCSrc           : in    STD_LOGIC;
         reset           : in    STD_LOGIC;
         zero            : out   STD_LOGIC;
@@ -100,6 +100,17 @@ architecture struct_arch of datapath is
             result  : out   STD_LOGIC_VECTOR( num_bits - 1 downto 0)
         );
     end component;
+    component my_4t1_mux is 
+        generic (num_bits : integer);
+        port(
+            A       : in STD_LOGIC_VECTOR( num_bits - 1 downto 0 );
+            B       : in STD_LOGIC_VECTOR( num_bits - 1 downto 0 );
+            C       : in STD_LOGIC_VECTOR( num_bits - 1 downto 0 );
+            D       : in STD_LOGIC_VECTOR( num_bits - 1 downto 0 );
+            control : in STD_LOGIC_VECTOR( 1 downto 0 );
+            result  : in STD_LOGIC_VECTOR( num_bits - 1 downto 0 )
+        );
+    end component;
     -- internal signal declarations
     signal SrcA               : STD_LOGIC_VECTOR ( local_num_bits - 1 downto 0 );
     signal SrcB               : STD_LOGIC_VECTOR ( local_num_bits - 1 downto 0 );
@@ -139,7 +150,7 @@ begin
         port map(
             carry_in => '0', -- carries are unused
             uint_1 => PCInt,
-            uint_2 => X"0000_0004", -- put 4 in least significant nibble 0 all others
+            uint_2 => X"0000_0004", -- add 4
             uint_sum => PCPlus4, 
             gen_adder_c_out => open
         );
@@ -200,11 +211,13 @@ begin
 
     );
      -- mux to select between the data memory input and the ALUResult
-    result_mux : my_2t1_mux
+    result_mux : my_4t1_mux
     generic map ( num_bits => local_num_bits)
     port map (
         A => ALUResult, 
-        B => ReadData, 
+        B => ReadData,
+        C => PCPlus4,
+        D => X"0000_0000", 
         control => ResultSrc, 
         result => result_mux_out
     );

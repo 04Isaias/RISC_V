@@ -3,7 +3,7 @@
 -- The circuit described within this file
 -- defaults to a 32-bit ALU with the following features
 -- N negative flag      Z zero flag     C carry out flag        V overflow flag (flags: NZCV V is LSB)
--- A + B Sum (000)      A - B Sum (001)  A AND B(  )           A OR B (011)            A < B (101)
+-- A + B Sum (000)      A - B Sum (001)  A AND B(010)           A OR B (011)            A < B (101)
 -- future features: Multiplication, Division, Magnitude comparison
 library IEEE;
 use IEEE.STD_LOGIC_1164.all;

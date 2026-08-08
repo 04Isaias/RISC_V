@@ -13,7 +13,7 @@ entity control_unit is
         zero        : in STD_LOGIC;
 
         PCSrc       : out STD_LOGIC;
-        ResultSrc   : out STD_LOGIC;
+        ResultSrc   : out STD_LOGIC_Vector( 1 downto 0);
         MemWrite    : out STD_LOGIC;
         RegWrite    : out STD_LOGIC;
         ALUSrc      : out STD_LOGIC;
@@ -31,8 +31,9 @@ architecture hybrid_arch of control_unit is
             ImmSrc      :   out STD_LOGIC_VECTOR    ( 1 downto 0);
             ALUSrc      :   out STD_LOGIC;        
             MemWrite    :   out STD_LOGIC;
-            ResultSrc   :   out STD_LOGIC;             
+            ResultSrc   :   out STD_LOGIC_VECTOR    ( 1 downto 0);             
             Branch      :   out STD_LOGIC;
+            Jump        :   out STD_LOGIC;
             ALUOp       :   out STD_LOGIC_VECTOR    ( 1 downto 0)
         );
     end component;
@@ -50,6 +51,7 @@ architecture hybrid_arch of control_unit is
     -- declare internal signals
     signal ALUOp  : STD_LOGIC_VECTOR ( 1 downto 0);
     signal Branch : STD_LOGIC;
+    signal Jump : STD_LOGIC;
 begin
     my_main_decoder : main_decoder
     port map (
@@ -60,6 +62,7 @@ begin
         MemWrite =>MemWrite, 
         ResultSrc => ResultSrc,
         Branch => Branch,
+        Jump => Jump,
         ALUOp => ALUOp
     );
     my_alu_decoder : alu_decoder
@@ -70,6 +73,6 @@ begin
         ALUOp => ALUOp,
         ALUControl => ALUControl
     );
-    PCSrc <= Branch AND zero;
+    PCSrc <= (Branch AND zero) OR Jump;
 end architecture hybrid_arch;
 

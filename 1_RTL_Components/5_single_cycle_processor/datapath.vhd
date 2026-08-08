@@ -20,6 +20,7 @@ entity datapath is
         ALUSrc          : in    STD_LOGIC;
         ResultSrc       : in    STD_LOGIC;
         PCSrc           : in    STD_LOGIC;
+        reset           : in    STD_LOGIC;
         zero            : out   STD_LOGIC;
         pc_out          : out   STD_LOGIC_VECTOR ( local_num_bits - 1 downto 0 );
         alu_result      : out   STD_LOGIC_VECTOR ( local_num_bits - 1 downto 0 );
@@ -84,7 +85,7 @@ architecture struct_arch of datapath is
     -- it's 
     component sign_extender is
         port (
-            num_in   :   in  STD_LOGIC_VECTOR   ( 23 downto 0);
+            num_in   :   in  STD_LOGIC_VECTOR   ( 24 downto 0);
             imm_src  :   in  STD_LOGIC_VECTOR   ( 1 downto 0);
             num_ext  :   out STD_LOGIC_VECTOR   ( 31 downto 0)
         );
@@ -109,6 +110,7 @@ architecture struct_arch of datapath is
     signal result_mux_out     : STD_LOGIC_VECTOR ( local_num_bits - 1 downto 0 );
     signal PCTarget           : STD_LOGIC_VECTOR ( local_num_bits - 1 downto 0 );
     signal PCNext             : STD_LOGIC_VECTOR ( local_num_bits - 1 downto 0 );
+    signal PCInt              : STD_LOGIC_VECTOR ( local_num_bits - 1 downto 0 );
     signal flags              : STD_LOGIC_VECTOR ( 3 downto 0 );
     
 begin
@@ -126,19 +128,20 @@ begin
         generic map ( num_bits => local_num_bits)
         port map(
             PCNext => PCNext, 
-            reset  => '0', -- no reset yet
+            reset  => reset, 
             clk    => clk,
-            PC     => pc_out
+            PC     => PCInt
         );
+    pc_out <= PCInt;
     -- wiring up program adder that incrments address
     my_adder : gen_adder
         generic map(num_bits => local_num_bits)
         port map(
             carry_in => '0', -- carries are unused
-            uint_1 => pc_out,
-            uint_2 => ((others=>'0'),X"4"), -- put 4 in lsb 0 all others
+            uint_1 => PCInt,
+            uint_2 => X"0000_0004", -- put 4 in least significant nibble 0 all others
             uint_sum => PCPlus4, 
-            gen_adder_c_out => '0'
+            gen_adder_c_out => open
         );
     -- Register File
     my_reg_file : register_file
@@ -189,8 +192,8 @@ begin
     PCTarget_adder : gen_adder
     generic map ( num_bits => local_num_bits )
     port map (
-        carry_in        => open, 
-        uint_1          => pc_out,
+        carry_in        => '0', 
+        uint_1          => PCInt,
         uint_2          => ImmExt,
         uint_sum        => PCTarget,
         gen_adder_c_out => open

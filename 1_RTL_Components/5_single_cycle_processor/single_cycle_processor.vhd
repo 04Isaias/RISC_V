@@ -11,7 +11,7 @@ entity single_cycle_processor is
         Instr       :   in  STD_LOGIC_VECTOR ( num_bits -1 downto 0);
         ReadData    :   in  STD_LOGIC_VECTOR ( num_bits -1 downto 0);
         CLK         :   in  STD_LOGIC;
-        --reset       :   in  STD_LOGIC;
+        reset       :   in  STD_LOGIC;
 
         PC          :   out STD_LOGIC_VECTOR (num_bits -1 downto 0);
         WriteData   :   out STD_LOGIC_VECTOR (num_bits -1 downto 0);
@@ -25,10 +25,9 @@ architecture struct of single_cycle_processor is
     component control_unit is
         port(
             op          : in STD_LOGIC_VECTOR (6 downto 0);
-            funct3       : in STD_LOGIC_VECTOR (2 downto 0);
-            funct7       : in STD_LOGIC;
+            funct3      : in STD_LOGIC_VECTOR (2 downto 0);
+            funct7      : in STD_LOGIC;
             zero        : in STD_LOGIC;
-
             PCSrc       : out STD_LOGIC;
             ResultSrc   : out STD_LOGIC;
             MemWrite    : out STD_LOGIC;
@@ -54,6 +53,7 @@ architecture struct of single_cycle_processor is
             ALUSrc          : in    STD_LOGIC;
             ResultSrc       : in    STD_LOGIC;
             PCSrc           : in    STD_LOGIC;
+            reset           : in    STD_LOGIC;
             zero            : out   STD_LOGIC;
             pc_out          : out   STD_LOGIC_VECTOR ( local_num_bits - 1 downto 0 );
             alu_result      : out   STD_LOGIC_VECTOR ( local_num_bits - 1 downto 0 );
@@ -86,6 +86,7 @@ begin
         ALUSrc      => ALUSrc, 
         ResultSrc   => ResultSrc,
         PCSrc       => PCSrc, 
+        reset       => reset,
         zero        => zero,
         pc_out      => PC,
         alu_result  => DataAdr,

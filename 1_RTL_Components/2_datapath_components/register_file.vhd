@@ -35,7 +35,7 @@ architecture hybrid_arch of register_file is
         of STD_LOGIC_VECTOR ( num_bits - 1 downto 0);
     signal register_arr: mem_array;
 begin
-    -- process ot handle writing to a register
+    -- process to handle writing to a register
     process(clk) begin
         if rising_edge(clk) then
             if write_enable then register_arr(TO_INTEGER(write_addr_3)) <= write_data;

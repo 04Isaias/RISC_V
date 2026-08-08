@@ -16,14 +16,13 @@ entity pc is
 end pc;
 
 architecture behavioral_arc of pc is
-    signal default_instruction : STD_LOGIC_VECTOR ( num_bits - 1 downto 0 ) := (others => '0');
 begin
     
     pass_value : process(clk) is
     begin
         if rising_edge(clk) then 
-            if(reset) then
-                PC <= default_instruction or X"00001000";
+            if(reset = '1') then
+                PC <= X"00001000";
             else
                 PC <= PCNext;
             end if;

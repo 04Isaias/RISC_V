@@ -38,19 +38,17 @@ begin
     -- process to handle writing to a register
     process(clk) begin
         if rising_edge(clk) then
-            if write_enable then register_arr(TO_INTEGER(write_addr_3)) <= write_data;
+            if (write_enable = '1') AND (TO_INTEGER(write_addr_3) /= 0) then
+                register_arr(TO_INTEGER(write_addr_3)) <= write_data;
             end if;
         end if;
     end process;
     -- process to handle reading from a register
     -- wondering if this would be better as two seperate processes.
-    process (read_addr_1, read_addr_2) begin
-        if(TO_INTEGER(read_addr_1) = 0) then read_data_1 <= (others => '0');
-        else read_data_1 <= register_arr(TO_INTEGER(read_addr_1));
-        end if;
-        if(TO_INTEGER(read_addr_2) = 0) then read_data_2 <= (others => '0');
-        else read_data_2 <= register_arr(TO_INTEGER(read_addr_2));
-        end if;
-    end process; 
+
+    read_data_1 <= (others => '0') when TO_INTEGER(read_addr_1) = 0  else
+                   register_arr(TO_INTEGER(read_addr_1));
+    read_data_2 <= (others => '0') when TO_INTEGER(read_addr_2) = 0  else
+                   register_arr(TO_INTEGER(read_addr_2));
 
 end architecture hybrid_arch;

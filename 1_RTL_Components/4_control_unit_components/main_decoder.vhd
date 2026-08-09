@@ -38,8 +38,8 @@ begin
     -- input control bits are from the Opcode (7 bits)
     --                                XXX_XXXX
     -- output control bits are out_vec (10 bits): 
-    -- RegWrite ImmSrc ALUSrc MemWrite ResultSrc Branch ALUOp
-    --    X       XX     X       X        XX       X     XX        
+    -- RegWrite ImmSrc ALUSrc MemWrite ResultSrc Branch ALUOp Jump
+    --    X       XX     X       X        XX       X     XX     X
     with (op) select
         out_vec <= "10010010000" when "0000011", -- lw
                    "10010000100" when "0010011", -- addi, andi, ori, slti

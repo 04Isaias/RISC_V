@@ -20,7 +20,8 @@ architecture dataflow_arch of alu_decoder is
     signal controls : STD_LOGIC_VECTOR( 6 downto 0);
 begin
     controls <= (ALUOp & funct3 & op5 & funct7);
-
+    --  ALUOp    funct3   op5   funct7
+    --   XX       XXX      X      X
     -- adding support for andi would be trivial. 
     with (controls) select
         ALUControl <= "000" when "00-----"|"1000000"|"1000001"|"1000010", --lw,sw,add,addi

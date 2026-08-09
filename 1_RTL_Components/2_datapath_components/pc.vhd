@@ -22,7 +22,7 @@ begin
     begin
         if rising_edge(clk) then 
             if(reset = '1') then
-                PC <= X"00001000";
+                PC <= X"00000000";
             else
                 PC <= PCNext;
             end if;

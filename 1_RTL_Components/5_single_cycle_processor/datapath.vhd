@@ -108,7 +108,7 @@ architecture struct_arch of datapath is
             C       : in STD_LOGIC_VECTOR( num_bits - 1 downto 0 );
             D       : in STD_LOGIC_VECTOR( num_bits - 1 downto 0 );
             control : in STD_LOGIC_VECTOR( 1 downto 0 );
-            result  : in STD_LOGIC_VECTOR( num_bits - 1 downto 0 )
+            result  : out STD_LOGIC_VECTOR( num_bits - 1 downto 0 )
         );
     end component;
     -- internal signal declarations
@@ -158,12 +158,12 @@ begin
     my_reg_file : register_file
         generic map(
             num_bits => local_num_bits,
-            num_register => local_num_bits,
+            num_register => 100,
             address_var_size => local_addr_size
         )
         port map(
             read_addr_1     => instruction( 19 downto 15),  -- A1
-            read_addr_2     => (others => '0'),             -- A2
+            read_addr_2     => instruction( 24 downto 20),             -- A2
             write_addr_3    => instruction( 11 downto 7),   -- A3
             write_data      => result_mux_out,              -- WD3 in the schematic
             write_enable    => RegWrite,                    

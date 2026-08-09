@@ -1,0 +1,355 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="testbench_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="glbl" />
+            <top_module name="testbench" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="166,993 ps"></ZoomStartTime>
+      <ZoomEndTime time="167,002 ps"></ZoomEndTime>
+      <Cursor1Time time="166,999 ps"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="202"></NameColumnWidth>
+      <ValueColumnWidth column_width="114"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="10" />
+   <wvobject fp_name="/testbench/clk" type="logic">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testbench/reset" type="logic">
+      <obj_property name="ElementShortName">reset</obj_property>
+      <obj_property name="ObjectShortName">reset</obj_property>
+   </wvobject>
+   <wvobject fp_name="group754" type="group">
+      <obj_property name="label">Top</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject fp_name="/testbench/WriteData" type="array">
+         <obj_property name="ElementShortName">WriteData[31:0]</obj_property>
+         <obj_property name="ObjectShortName">WriteData[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/testbench/DataAdr" type="array">
+         <obj_property name="ElementShortName">DataAdr[31:0]</obj_property>
+         <obj_property name="ObjectShortName">DataAdr[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/testbench/MemWrite" type="logic">
+         <obj_property name="ElementShortName">MemWrite</obj_property>
+         <obj_property name="ObjectShortName">MemWrite</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject fp_name="group747" type="group">
+      <obj_property name="label">ControlUnit</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject fp_name="/testbench/dut/rvsingle/my_control_unit/op" type="array">
+         <obj_property name="ElementShortName">op[6:0]</obj_property>
+         <obj_property name="ObjectShortName">op[6:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/testbench/dut/rvsingle/my_control_unit/funct3" type="array">
+         <obj_property name="ElementShortName">funct3[2:0]</obj_property>
+         <obj_property name="ObjectShortName">funct3[2:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/testbench/dut/rvsingle/my_control_unit/funct7" type="logic">
+         <obj_property name="ElementShortName">funct7</obj_property>
+         <obj_property name="ObjectShortName">funct7</obj_property>
+      </wvobject>
+      <wvobject fp_name="/testbench/dut/rvsingle/my_control_unit/zero" type="logic">
+         <obj_property name="ElementShortName">zero</obj_property>
+         <obj_property name="ObjectShortName">zero</obj_property>
+      </wvobject>
+      <wvobject fp_name="/testbench/dut/rvsingle/my_control_unit/PCSrc" type="logic">
+         <obj_property name="ElementShortName">PCSrc</obj_property>
+         <obj_property name="ObjectShortName">PCSrc</obj_property>
+      </wvobject>
+      <wvobject fp_name="/testbench/dut/rvsingle/my_control_unit/ResultSrc" type="array">
+         <obj_property name="ElementShortName">ResultSrc[1:0]</obj_property>
+         <obj_property name="ObjectShortName">ResultSrc[1:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/testbench/dut/rvsingle/my_control_unit/MemWrite" type="logic">
+         <obj_property name="ElementShortName">MemWrite</obj_property>
+         <obj_property name="ObjectShortName">MemWrite</obj_property>
+      </wvobject>
+      <wvobject fp_name="/testbench/dut/rvsingle/my_control_unit/RegWrite" type="logic">
+         <obj_property name="ElementShortName">RegWrite</obj_property>
+         <obj_property name="ObjectShortName">RegWrite</obj_property>
+      </wvobject>
+      <wvobject fp_name="/testbench/dut/rvsingle/my_control_unit/ALUSrc" type="logic">
+         <obj_property name="ElementShortName">ALUSrc</obj_property>
+         <obj_property name="ObjectShortName">ALUSrc</obj_property>
+      </wvobject>
+      <wvobject fp_name="/testbench/dut/rvsingle/my_control_unit/ALUControl" type="array">
+         <obj_property name="ElementShortName">ALUControl[2:0]</obj_property>
+         <obj_property name="ObjectShortName">ALUControl[2:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/testbench/dut/rvsingle/my_control_unit/ImmSrc" type="array">
+         <obj_property name="ElementShortName">ImmSrc[1:0]</obj_property>
+         <obj_property name="ObjectShortName">ImmSrc[1:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/testbench/dut/rvsingle/my_control_unit/ALUOp" type="array">
+         <obj_property name="ElementShortName">ALUOp[1:0]</obj_property>
+         <obj_property name="ObjectShortName">ALUOp[1:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/testbench/dut/rvsingle/my_control_unit/Branch" type="logic">
+         <obj_property name="ElementShortName">Branch</obj_property>
+         <obj_property name="ObjectShortName">Branch</obj_property>
+      </wvobject>
+      <wvobject fp_name="/testbench/dut/rvsingle/my_control_unit/Jump" type="logic">
+         <obj_property name="ElementShortName">Jump</obj_property>
+         <obj_property name="ObjectShortName">Jump</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject fp_name="group748" type="group">
+      <obj_property name="label">RegisterFile</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+      <wvobject fp_name="/testbench/dut/rvsingle/my_datapath/my_reg_file/read_addr_1" type="array">
+         <obj_property name="ElementShortName">read_addr_1[4:0]</obj_property>
+         <obj_property name="ObjectShortName">read_addr_1[4:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/testbench/dut/rvsingle/my_datapath/my_reg_file/read_addr_2" type="array">
+         <obj_property name="ElementShortName">read_addr_2[4:0]</obj_property>
+         <obj_property name="ObjectShortName">read_addr_2[4:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/testbench/dut/rvsingle/my_datapath/my_reg_file/write_addr_3" type="array">
+         <obj_property name="ElementShortName">write_addr_3[4:0]</obj_property>
+         <obj_property name="ObjectShortName">write_addr_3[4:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/testbench/dut/rvsingle/my_datapath/my_reg_file/write_data" type="array">
+         <obj_property name="ElementShortName">write_data[31:0]</obj_property>
+         <obj_property name="ObjectShortName">write_data[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/testbench/dut/rvsingle/my_datapath/my_reg_file/write_enable" type="logic">
+         <obj_property name="ElementShortName">write_enable</obj_property>
+         <obj_property name="ObjectShortName">write_enable</obj_property>
+      </wvobject>
+      <wvobject fp_name="/testbench/dut/rvsingle/my_datapath/my_reg_file/clk" type="logic">
+         <obj_property name="ElementShortName">clk</obj_property>
+         <obj_property name="ObjectShortName">clk</obj_property>
+      </wvobject>
+      <wvobject fp_name="/testbench/dut/rvsingle/my_datapath/my_reg_file/read_data_1" type="array">
+         <obj_property name="ElementShortName">read_data_1[31:0]</obj_property>
+         <obj_property name="ObjectShortName">read_data_1[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/testbench/dut/rvsingle/my_datapath/my_reg_file/read_data_2" type="array">
+         <obj_property name="ElementShortName">read_data_2[31:0]</obj_property>
+         <obj_property name="ObjectShortName">read_data_2[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/testbench/dut/rvsingle/my_datapath/my_reg_file/register_arr" type="array">
+         <obj_property name="ElementShortName">register_arr[99:0][31:0]</obj_property>
+         <obj_property name="ObjectShortName">register_arr[99:0][31:0]</obj_property>
+         <obj_property name="isExpanded"></obj_property>
+      </wvobject>
+      <wvobject fp_name="/testbench/dut/rvsingle/my_datapath/my_reg_file/num_bits" type="other">
+         <obj_property name="ElementShortName">num_bits</obj_property>
+         <obj_property name="ObjectShortName">num_bits</obj_property>
+      </wvobject>
+      <wvobject fp_name="/testbench/dut/rvsingle/my_datapath/my_reg_file/num_register" type="other">
+         <obj_property name="ElementShortName">num_register</obj_property>
+         <obj_property name="ObjectShortName">num_register</obj_property>
+      </wvobject>
+      <wvobject fp_name="/testbench/dut/rvsingle/my_datapath/my_reg_file/address_var_size" type="other">
+         <obj_property name="ElementShortName">address_var_size</obj_property>
+         <obj_property name="ObjectShortName">address_var_size</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject fp_name="group749" type="group">
+      <obj_property name="label">InstructionMem</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+      <wvobject fp_name="/testbench/dut/imem/a" type="array">
+         <obj_property name="ElementShortName">a[31:0]</obj_property>
+         <obj_property name="ObjectShortName">a[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/testbench/dut/imem/rd" type="array">
+         <obj_property name="ElementShortName">rd[31:0]</obj_property>
+         <obj_property name="ObjectShortName">rd[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/testbench/dut/imem/RAM" type="array">
+         <obj_property name="ElementShortName">RAM[63:0][31:0]</obj_property>
+         <obj_property name="ObjectShortName">RAM[63:0][31:0]</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject fp_name="group752" type="group">
+      <obj_property name="label">ALU</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject fp_name="group751" type="group">
+         <obj_property name="label">ALU</obj_property>
+         <obj_property name="DisplayName">label</obj_property>
+         <wvobject fp_name="group750" type="group">
+            <obj_property name="label">DataMem</obj_property>
+            <obj_property name="DisplayName">label</obj_property>
+         </wvobject>
+      </wvobject>
+      <wvobject fp_name="/testbench/dut/rvsingle/my_datapath/my_alu/A" type="array">
+         <obj_property name="ElementShortName">A[31:0]</obj_property>
+         <obj_property name="ObjectShortName">A[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/testbench/dut/rvsingle/my_datapath/my_alu/B" type="array">
+         <obj_property name="ElementShortName">B[31:0]</obj_property>
+         <obj_property name="ObjectShortName">B[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/testbench/dut/rvsingle/my_datapath/my_alu/control" type="array">
+         <obj_property name="ElementShortName">control[2:0]</obj_property>
+         <obj_property name="ObjectShortName">control[2:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/testbench/dut/rvsingle/my_datapath/my_alu/result" type="array">
+         <obj_property name="ElementShortName">result[31:0]</obj_property>
+         <obj_property name="ObjectShortName">result[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/testbench/dut/rvsingle/my_datapath/my_alu/flags" type="array">
+         <obj_property name="ElementShortName">flags[3:0]</obj_property>
+         <obj_property name="ObjectShortName">flags[3:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/testbench/dut/rvsingle/my_datapath/my_alu/b_mux_out" type="array">
+         <obj_property name="ElementShortName">b_mux_out[31:0]</obj_property>
+         <obj_property name="ObjectShortName">b_mux_out[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/testbench/dut/rvsingle/my_datapath/my_alu/r_mux_out" type="array">
+         <obj_property name="ElementShortName">r_mux_out[31:0]</obj_property>
+         <obj_property name="ObjectShortName">r_mux_out[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/testbench/dut/rvsingle/my_datapath/my_alu/adder_c_out" type="logic">
+         <obj_property name="ElementShortName">adder_c_out</obj_property>
+         <obj_property name="ObjectShortName">adder_c_out</obj_property>
+      </wvobject>
+      <wvobject fp_name="/testbench/dut/rvsingle/my_datapath/my_alu/adder_sum_out" type="array">
+         <obj_property name="ElementShortName">adder_sum_out[31:0]</obj_property>
+         <obj_property name="ObjectShortName">adder_sum_out[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/testbench/dut/rvsingle/my_datapath/my_alu/ALUControl" type="array">
+         <obj_property name="ElementShortName">ALUControl[2:0]</obj_property>
+         <obj_property name="ObjectShortName">ALUControl[2:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/testbench/dut/rvsingle/my_datapath/my_alu/SLT" type="array">
+         <obj_property name="ElementShortName">SLT[31:0]</obj_property>
+         <obj_property name="ObjectShortName">SLT[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/testbench/dut/rvsingle/my_datapath/my_alu/num_bits" type="other">
+         <obj_property name="ElementShortName">num_bits</obj_property>
+         <obj_property name="ObjectShortName">num_bits</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject fp_name="group843" type="group">
+      <obj_property name="label">ResultMux</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject fp_name="group753" type="group">
+         <obj_property name="label">ExtendUnit</obj_property>
+         <obj_property name="DisplayName">label</obj_property>
+         <wvobject fp_name="/testbench/dut/rvsingle/my_datapath/my_extender/num_in" type="array">
+            <obj_property name="ElementShortName">num_in[24:0]</obj_property>
+            <obj_property name="ObjectShortName">num_in[24:0]</obj_property>
+         </wvobject>
+         <wvobject fp_name="/testbench/dut/rvsingle/my_datapath/my_extender/imm_src" type="array">
+            <obj_property name="ElementShortName">imm_src[1:0]</obj_property>
+            <obj_property name="ObjectShortName">imm_src[1:0]</obj_property>
+         </wvobject>
+         <wvobject fp_name="/testbench/dut/rvsingle/my_datapath/my_extender/num_ext" type="array">
+            <obj_property name="ElementShortName">num_ext[31:0]</obj_property>
+            <obj_property name="ObjectShortName">num_ext[31:0]</obj_property>
+         </wvobject>
+         <wvobject fp_name="/testbench/dut/rvsingle/my_datapath/my_extender/imm12" type="array">
+            <obj_property name="ElementShortName">imm12[11:0]</obj_property>
+            <obj_property name="ObjectShortName">imm12[11:0]</obj_property>
+         </wvobject>
+         <wvobject fp_name="/testbench/dut/rvsingle/my_datapath/my_extender/imm13" type="array">
+            <obj_property name="ElementShortName">imm13[12:0]</obj_property>
+            <obj_property name="ObjectShortName">imm13[12:0]</obj_property>
+         </wvobject>
+         <wvobject fp_name="/testbench/dut/rvsingle/my_datapath/my_extender/imm21" type="array">
+            <obj_property name="ElementShortName">imm21[20:0]</obj_property>
+            <obj_property name="ObjectShortName">imm21[20:0]</obj_property>
+         </wvobject>
+      </wvobject>
+      <wvobject fp_name="/testbench/dut/rvsingle/my_datapath/result_mux/A" type="array">
+         <obj_property name="ElementShortName">A[31:0]</obj_property>
+         <obj_property name="ObjectShortName">A[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/testbench/dut/rvsingle/my_datapath/result_mux/B" type="array">
+         <obj_property name="ElementShortName">B[31:0]</obj_property>
+         <obj_property name="ObjectShortName">B[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/testbench/dut/rvsingle/my_datapath/result_mux/C" type="array">
+         <obj_property name="ElementShortName">C[31:0]</obj_property>
+         <obj_property name="ObjectShortName">C[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/testbench/dut/rvsingle/my_datapath/result_mux/D" type="array">
+         <obj_property name="ElementShortName">D[31:0]</obj_property>
+         <obj_property name="ObjectShortName">D[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/testbench/dut/rvsingle/my_datapath/result_mux/control" type="array">
+         <obj_property name="ElementShortName">control[1:0]</obj_property>
+         <obj_property name="ObjectShortName">control[1:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/testbench/dut/rvsingle/my_datapath/result_mux/result" type="array">
+         <obj_property name="ElementShortName">result[31:0]</obj_property>
+         <obj_property name="ObjectShortName">result[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/testbench/dut/rvsingle/my_datapath/result_mux/num_bits" type="other">
+         <obj_property name="ElementShortName">num_bits</obj_property>
+         <obj_property name="ObjectShortName">num_bits</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject fp_name="group1226" type="group">
+      <obj_property name="label">Extender</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject fp_name="/testbench/dut/rvsingle/my_datapath/my_extender/num_in" type="array">
+         <obj_property name="ElementShortName">num_in[24:0]</obj_property>
+         <obj_property name="ObjectShortName">num_in[24:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/testbench/dut/rvsingle/my_datapath/my_extender/imm_src" type="array">
+         <obj_property name="ElementShortName">imm_src[1:0]</obj_property>
+         <obj_property name="ObjectShortName">imm_src[1:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/testbench/dut/rvsingle/my_datapath/my_extender/num_ext" type="array">
+         <obj_property name="ElementShortName">num_ext[31:0]</obj_property>
+         <obj_property name="ObjectShortName">num_ext[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/testbench/dut/rvsingle/my_datapath/my_extender/imm12" type="array">
+         <obj_property name="ElementShortName">imm12[11:0]</obj_property>
+         <obj_property name="ObjectShortName">imm12[11:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/testbench/dut/rvsingle/my_datapath/my_extender/imm13" type="array">
+         <obj_property name="ElementShortName">imm13[12:0]</obj_property>
+         <obj_property name="ObjectShortName">imm13[12:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/testbench/dut/rvsingle/my_datapath/my_extender/imm21" type="array">
+         <obj_property name="ElementShortName">imm21[20:0]</obj_property>
+         <obj_property name="ObjectShortName">imm21[20:0]</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject fp_name="group2078" type="group">
+      <obj_property name="label">DataMem</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+      <wvobject fp_name="/testbench/dut/dmem/clk" type="logic">
+         <obj_property name="ElementShortName">clk</obj_property>
+         <obj_property name="ObjectShortName">clk</obj_property>
+      </wvobject>
+      <wvobject fp_name="/testbench/dut/dmem/we" type="logic">
+         <obj_property name="ElementShortName">we</obj_property>
+         <obj_property name="ObjectShortName">we</obj_property>
+      </wvobject>
+      <wvobject fp_name="/testbench/dut/dmem/a" type="array">
+         <obj_property name="ElementShortName">a[31:0]</obj_property>
+         <obj_property name="ObjectShortName">a[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/testbench/dut/dmem/wd" type="array">
+         <obj_property name="ElementShortName">wd[31:0]</obj_property>
+         <obj_property name="ObjectShortName">wd[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/testbench/dut/dmem/rd" type="array">
+         <obj_property name="ElementShortName">rd[31:0]</obj_property>
+         <obj_property name="ObjectShortName">rd[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/testbench/dut/dmem/RAM" type="array">
+         <obj_property name="ElementShortName">RAM[63:0][31:0]</obj_property>
+         <obj_property name="ObjectShortName">RAM[63:0][31:0]</obj_property>
+      </wvobject>
+   </wvobject>
+</wave_config>

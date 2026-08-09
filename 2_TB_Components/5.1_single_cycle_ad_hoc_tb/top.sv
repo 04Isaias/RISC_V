@@ -6,13 +6,13 @@ module top(input   logic              clk, reset,
      single_cycle_processor rvsingle(
         .Instr(Instr),
         .ReadData(ReadData), 
-        .CLK(),
+        .CLK(clk),
         .reset(reset),
         .PC(PC),
         .writedata(WriteData),
         .DataAdr(DataAdr),
         .MemWrite(MemWrite)
         );
-    imem imem(PC, Instr);
-    dmem dmem(clk, MemWrite, DataAdr, WriteData, ReadData);
+    imem imem(.a(PC), .rd(Instr));
+    dmem dmem(.clk(clk), .we(MemWrite), .a(DataAdr), .wd(WriteData), .rd(ReadData));
 endmodule
